@@ -1,0 +1,135 @@
+/* 
+* @命名规则：原有布局,一律大写,自定义布局,驼峰命名法
+* @author bigonion
+ */
+/* *{
+  user-select: text !important;
+} */
+code {
+  font-size: 17px;
+}
+@font-face {
+  font-family: Futura !important;
+  src: url("../assets/font/Futura/Futura-Book-2.ttf");
+}
+/* 文字 */
+.P0 {
+  font-size: 20vh !important;
+}
+.P1 {
+  font-size: 15vh !important;
+}
+.P2 {
+  font-size: 7vh !important;
+}
+.P3 {
+  font-size: 6vh !important;
+}
+.P4 {
+  font-size: 4vh !important;
+}
+.P5 {
+  font-size: 2.5vh !important;
+}
+/* 图像 */
+.smallPic {
+  height: 40vh !important;
+}
+.smallPic img {
+  height: 40vh;
+}
+.midPic {
+  height: 60%;
+}
+.bigPic {
+  height: 80vh !important;
+}
+
+.chartPic {
+  width: 86%;
+  /* margin: 0px 20px !important; */
+}
+
+/* 布局 */
+.FLEX {
+  display: flex;
+}
+.ROW {
+  flex-direction: row;
+}
+.COL {
+  flex-direction: column;
+}
+.ROW-REV {
+  flex-direction: row-reverse;
+}
+.COL-REV {
+  flex-direction: column-reverse;
+}
+.JUS-CENTER {
+  justify-content: center;
+}
+.ALI-CENTER {
+  align-items: center;
+}
+
+.GRID4 {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+.GRID2 {
+  display: grid !important;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: 20px;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+.NOMARGIN {
+  margin: 0 !important;
+}
+.MARGIN {
+  margin: 1vh;
+}
+
+.fullPreCode {
+  height: 80% !important;
+  overflow: hidden;
+}
+.fullSection {
+  height: 116vh;
+}
+.fullSectionWidth {
+  width: 100vw !important;
+}
+.tableFont {
+  font-size: 26px;
+}
+
+iframe {
+  height: 80% !important;
+}
+/* 颜色 */
+.RED {
+  color: #e61313 !important;
+}
+.YELLOW {
+  color: #fff698;
+}
+.PINK {
+  color: pink;
+}
+.WHITE {
+  color: white !important;
+}
+
+.NOLIST {
+  list-style-type: none;
+}
+.NOLIST li {
+  list-style-type: none;
+}

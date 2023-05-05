@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/white-contrast.css" />
+    <link rel="stylesheet" href="./custom/index.css" />
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-markdown>## 课堂展示</section>
+        <section data-line-numbers>Slide 2
+          <pre><code data-line-numbers="1-8|8-13|13-18">
+            <table>
+              <tr>
+                <td>Apples</td>
+                <td>$1</td>
+                <td>7</td>
+              </tr>
+              <tr>
+                <td>Oranges</td>
+                <td>$2</td>
+                <td>18</td>
+              </tr>
+              <tr>
+                <td>Kiwi</td>
+                <td>$3</td>
+                <td>1</td>
+              </tr>
+            </table>
+            </code></pre>
+        </section>
+
+        <section data-markdown>
+          <textarea data-template>
+					  ## Slide 1
+					  ---
+					  ## Slide 2
+					  ```js
+					  alert("1")
+            alert("1")
+            alert("1")
+            alert("1")
+            alert("1")
+            ;alert("1")
+            alert("1")
+					  ```
+					</textarea
+          >
+        </section>
+        <!-- SLIDE 1 A paragraph with some text and a link. SLIDE 2 SLIDE 3 -->
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <!-- <script src="plugin/math/math.js"></script> -->
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+      });
+    </script>
+  </body>
+</html>

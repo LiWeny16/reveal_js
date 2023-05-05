@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="decription" content="基于线性分类器的多维数据分类">
+  <meta name="keywords" content="fisher,SVM,大聪花,bigonion,大葱花,puzzle,OpenAI,Markdwon,Music" />
+  <meta name="author" content="bigonion,bigonion@bigonion.cn">
+  <meta name="robots" content="index,follow" />
+  <title>基于线性分类器的多维数据分类</title>
+  <link rel="stylesheet" href="dist/reset.css" />
+  <link rel="stylesheet" href="dist/reveal.css" />
+  <link rel="stylesheet" href="dist/theme/white-contrast.css" />
+  <link rel="stylesheet" href="./custom/index.css" />
+  <link rel="stylesheet" href="./custom/githubMarkdownCss.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- 1基于线性分类器的多维数据分类 -->
+      <section data-background="black" data-transition="convex">
+        <h2>基于线性分类器的多维数据分类</h2>
+        <hr />
+
+        <p2 style="font-size: 4vh !important">马顺欣，黎文宇，余涛，张雨晴，王思颖 </p2>
+      </section>
+      <section>
+        <h2>程序设计</h2>
+      </section>
+      <!-- 2 数据导入 -->
+      <section data-line-numbers>
+        <h2>训练&测试数据生成</h2>
+        <pre><code data-line-numbers="1-10|9-20" >
+          # 生成训练数据
+          data1 = np.random.multivariate_normal([10,4],[[2,-1],[-1,2]],200)
+          data2 = np.random.multivariate_normal([15,8],[[2,-1],[-1,2]],200)
+          print(data1)
+          # 生成测试数据
+          test1 = np.random.multivariate_normal([10,4],[[2,-1],[-1,2]],200)
+          test2 = np.random.multivariate_normal([15,8],[[2,-1],[-1,2]],200)
+          
+          # 生成多类训练数据
+          data3 = np.random.multivariate_normal([10,10],[[3,0],[0,3]],200)
+          data4 = np.random.multivariate_normal([20,10],[[3,0],[0,3]],200)
+          data5 = np.random.multivariate_normal([15,18],[[3,0],[0,3]],200)
+          # 生成多类测试数据
+          test3 = np.random.multivariate_normal([10,10],[[3,0],[0,3]],200)
+          test4 = np.random.multivariate_normal([20,10],[[3,0],[0,3]],200)
+          test5 = np.random.multivariate_normal([15,18],[[3,0],[0,3]],200)   
+        
+        </code></pre>
+      </section>
+      <!-- 3 -->
+      <section>
+        <!-- 3.1 -->
+        <section>
+          <h2>fisher函数定义</h2>
+        </section>
+        <!-- 3.2 -->
+        <section>
+          <section class="fullSection" data-line-numbers>
+            <pre class="fullPreCode"><code data-line-numbers="1-10|11-35 " >
+              # Fisher 判别：分别输入两类二维数据，输出投影向量 w 和阈值 w0
+              def fisher(data1,data2):
+              m1 = [0,0]
+              m2 = [0,0]
+              for i in data1:
+                  m1 = np.add(m1,i)
+              m1 = np.divide(m1,len(data1))
+              for i in data2:
+                  m2 = np.add(m2,i)
+              m2 = np.divide(m2,len(data2))
+              # # print(m1,m2)
+              s1 = [[0,0],[0,0]]
+              s2 = [[0,0],[0,0]]
+              for i in data1:
+                  s1 = np.add(s1,np.dot(np.subtract(i,m1).reshape(2,1),np.subtract(i,m1).reshape(1,2)))
+              for i in data2:
+                  s2 = np.add(s2,np.dot(np.subtract(i,m2).reshape(2,1),np.subtract(i,m2).reshape(1,2)))
+              sw = np.add(s1,s2)
+              w = np.dot(np.linalg.inv(sw),np.subtract(m1,m2).reshape(2,1))
+              w0 = np.multiply(np.dot(np.add(m1,m2),w),-0.5)
+              return w, w0
+    
+    
+                </code></pre>
+          </section>
+        </section>
+      </section>
+
+      <!-- 4 二类试验过程 --训练 -->
+      <section data-transition="zoom">
+        <section data-transition="convex">
+          <h2>试验过程 --训练</h2>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-81" >
+            # 训练
+            w, w0 = fisher(data1,data2)
+            print(w,'\n',w0)
+            result1 = []
+            result2 = []
+            for i in data1:
+                result1.append(np.dot(i,w)+w0)
+            for i in data2:
+                result2.append(np.dot(i,w)+w0)
+            # 测试
+            testresult1 = []
+            testresult2 = []
+            for i in test1:
+                testresult1.append(np.dot(i,w)+w0)
+            for i in test2:
+                testresult2.append(np.dot(i,w)+w0)
+              </code></pre>
+        </section>
+        <section data-transition="convex">
+          <h2>试验过程 --测试</h2>
+        </section>
+        <section>
+          <pre class="fullPreCode"><code data-line-numbers="1-81" >
+            # 测试
+            testresult1 = []
+            testresult2 = []
+            for i in test1:
+                testresult1.append(np.dot(i,w)+w0)
+            for i in test2:
+                testresult2.append(np.dot(i,w)+w0)
+              </code></pre>
+        </section>
+        <section data-transition="convex">
+          <h2>试验过程 --绘图</h2>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-23|24-44" >
+            # 投影
+            k = float(w[1][0]/w[0][0])
+            b = 0 # 可根据观感调整
+            proj1 = []
+            proj2 = []
+            for i in data1:
+                proj1.append([(k*i[1] + i[0] - k*b)/(k**2+1), (k**2*i[1] + k*i[0] + b)/(k**2+1)])
+            for i in data2:
+                proj2.append([(k*i[1] + i[0] - k*b)/(k**2+1), (k**2*i[1] + k*i[0] + b)/(k**2+1)])
+            # 绘图
+            # 投影可视化
+            plt.figure()
+            plt.plot([min([x[0] for x in proj1+proj2]),max([x[0] for x in proj1+proj2])]
+                    ,[min([x[1] for x in proj1+proj2]),max([x[1] for x in proj1+proj2])])
+            for i in range(len(data1)):
+                plt.arrow(data1[i][0],data1[i][1],proj1[i][0]-data1[i][0],proj1[i][1]-data1[i][1],head_width=0.02, length_includes_head = 1, ec='aliceblue')
+            for i in range(len(data2)):
+                plt.arrow(data2[i][0],data2[i][1],proj2[i][0]-data2[i][0],proj2[i][1]-data2[i][1],head_width=0.02, length_includes_head = 1, ec='lavenderblush')
+            plt.scatter([x[0] for x in data1], [x[1] for x in data1],c='deepskyblue')
+            plt.scatter([x[0] for x in data2], [x[1] for x in data2],c='deeppink')
+            plt.scatter([x[0] for x in proj1], [x[1] for x in proj1],c='lightskyblue')
+            plt.scatter([x[0] for x in proj2], [x[1] for x in proj2],c='lightpink')
+            plt.show()
+            # 测试结果
+            plt.figure()
+            plt.plot([max(result1+result2),min(result1+result2)],[0,0])
+            plt.scatter([0],[0],marker='|',c ='black')
+            plt.scatter(result1,[0]*len(result1),c='aliceblue')
+            plt.scatter(result2,[0]*len(result2),c='lavenderblush')
+            plt.scatter(testresult1,[0]*len(testresult1),c='deepskyblue')
+            plt.scatter(testresult2,[0]*len(testresult2),c='deeppink')
+            plt.show()
+              </code></pre>
+        </section>
+        <section>
+          <div class="GRID2">
+            <img src="./assets/figure/Figure_1.svg" alt="err">
+            <img src="./assets/figure/Figure_2.svg" alt="err">
+          </div>
+        </section>
+      </section>
+      <!-- 5 三类试验过程 --训练 -->
+      <section data-transition="zoom">
+        <section data-transition="convex">
+          <h2>三类试验过程 --训练</h2>
+        </section>
+        <section>
+          <pre class="fullPreCode"><code data-line-numbers="1-81" >
+            # 训练
+            w1, w10 = fisher(data3,data4)
+            w2, w20 = fisher(data4,data5)
+            w3, w30 = fisher(data5,data3)
+              </code></pre>
+        </section>
+        <section data-transition="convex">
+          <h2>三类试验过程 --多类测试</h2>
+        </section>
+        <section>
+          <pre class="fullPreCode"><code data-line-numbers="1-81" >
+            testresult3 = list(zip([np.dot(x,w1)+w10 for x in test3], [np.dot(x,w2)+w20 for x in test3], [np.dot(x,w3)+w30 for x in test3]))
+            testresult4 = list(zip([np.dot(x,w1)+w10 for x in test4], [np.dot(x,w2)+w20 for x in test4], [np.dot(x,w3)+w30 for x in test4]))
+            testresult5 = list(zip([np.dot(x,w1)+w10 for x in test5], [np.dot(x,w2)+w20 for x in test5], [np.dot(x,w3)+w30 for x in test5]))
+            for i in range(len(testresult3)):
+                testresult3[i]=(testresult3[i][0]>0)*4+(testresult3[i][1]>0)*2+(testresult3[i][2]>0)
+                testresult4[i]=(testresult4[i][0]>0)*4+(testresult4[i][1]>0)*2+(testresult4[i][2]>0)
+                testresult5[i]=(testresult5[i][0]>0)*4+(testresult5[i][1]>0)*2+(testresult5[i][2]>0)
+            
+              </code></pre>
+        </section>
+        <section data-transition="convex">
+          <h2>三类试验过程 --绘图</h2>
+        </section>
+        <section>
+          <pre class="fullPreCode"><code data-line-numbers="1-23|24-44" >
+            color = dict(zip(range(8), ['darkgrey','gold','deeppink','deeppink','deepskyblue','gold','deepskyblue','darkgrey']))
+            plt.figure()
+            for i in range(len(test3)):
+                plt.scatter(test3[i][0],test3[i][1],c=color[testresult3[i][0]], marker='o')
+                plt.scatter(test4[i][0],test4[i][1],c=color[testresult4[i][0]], marker='s')
+                plt.scatter(test5[i][0],test5[i][1],c=color[testresult5[i][0]], marker='+')
+            plt.show()
+              </code></pre>
+        </section>
+        <section>
+          <img src="./assets/figure/Figure_3.svg" alt="err">
+        </section>
+      </section>
+
+
+
+      <!-- 6 SVM -->
+      <section data-transition="zoom">
+        <section>
+          <h2>支持向量机</h2>
+        </section>
+        <section>
+          <h2>测试数据生成</h2>
+          <pre class="fullPreCode"><code data-line-numbers="1-98" >
+            data1 = np.random.multivariate_normal([10,4],[[2,-1],[-1,2]],200)
+            data2 = np.random.multivariate_normal([15,8],[[2,-1],[-1,2]],200)
+            
+            testdata1 = np.random.multivariate_normal([10,4],[[2,-1],[-1,2]],100)
+            testdata2 = np.random.multivariate_normal([15,8],[[2,-1],[-1,2]],100)
+            
+                      </code></pre>
+        </section>
+        <section>
+          <h2>模型训练与预测</h2>
+          <pre class="fullPreCode"><code data-line-numbers="1-98" >
+            x = list(data1)+list(data2)
+            x = np.array(x)
+            y = [1 for i in range(200)]+[0 for i in range(200)]
+            y = np.array(y)
+            # 训练模型
+            model = svm.SVC(C=1, kernel='linear')
+            model.fit(x, y)
+            
+            # 预测
+            testdata1_pre = model.predict(testdata1)
+            testdata2_pre = model.predict(testdata2)
+            print("testdata1 predict:", testdata1_pre)
+            print("testdata2 predict:", testdata2_pre)
+                      </code></pre>
+        </section>
+        <section>
+          <h2>支持向量参数</h2>
+          <pre class="fullPreCode"><code data-line-numbers="1-98" >
+            # 对应的支持向量
+            Support_vector = model.support_vectors_
+            print("Support_vector:", Support_vector)
+            # 线性分类对应的参数
+            w = model.coef_
+            print("w:", w)
+            b = model.intercept_
+            print("b:", b)
+                      </code></pre>
+        </section>
+        <section>
+          <h2>图像绘制</h2>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-98" >
+            # 训练集散点图
+            plt.scatter(x[:, 0], x[:, 1], c='deepskyblue')
+            
+            if w[0, 1] != 0:
+                xdot = np.arange(5, 20)
+               
+                # 最佳分类线
+                ydot = -w[0, 0]/w[0, 1] * xdot - b/w[0, 1]
+                plt.plot(xdot, ydot,c='gold')
+                # b+-1
+                ydot1 = -w[0, 0]/w[0, 1] * xdot - (b+1)/w[0, 1]
+                plt.plot(xdot, ydot1, c='y')
+                ydot2 = -w[0, 0]/w[0, 1] * xdot - (b-1)/w[0, 1]
+                plt.plot(xdot, ydot2, c='y')
+            else:
+                xdot = np.ones(10) * (-b) / w[0, 0]
+                ydot = np.arange(0, 10)
+                plt.scatter(xdot, ydot)
+            plt.show()
+                      </code></pre>
+        </section>
+        <section>
+          <section>
+            <h2>输出结果</h2>
+            <pre ><code data-line-numbers="1-98" >
+              testdata1 predict: [1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1
+              1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+              1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1]
+             testdata2 predict: [0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+              0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+              0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
+             Support_vector: [[11.37857783  7.26872132]
+              [15.21815355  3.67764857]
+              [11.31919595  7.26881146]
+              [10.42245479  6.34075635]
+              [13.28039872  3.64093984]]
+             w: [[-1.01201092 -1.08203944]]
+             b: [18.3800441]
+                        </code></pre>
+          </section>
+        </section>
+        <section>
+          <img style="width: 70%;" src="./assets/figure/SVM.png" alt="2">
+        </section>
+      </section>
+
+      <!-- 5 结果与分析 -->
+      <!-- <section data-markdown data-transition="convex">
+        ## 结果与分析
+      </section> -->
+      <section>
+        <h1>Thank you!</h1>
+      </section>
+      <!-- SLIDE 1 A paragraph with some text and a link. SLIDE 2 SLIDE 3 -->
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script src="./custom/index.js"></script>
+  <script src="plugin/math/math.js"></script>
+  <script src="./plugin/zoom/zoom.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.configure({
+      keyboard: {
+        13: "next", // go to the next slide when the ENTER key is pressed
+        87: "up",
+        68: "next",
+        65: "left",
+        83: "down",
+        // 32: null, // don't do anything when SPACE is pressed (i.e. disable a reveal.js default binding)
+      },
+    });
+    Reveal.initialize({
+      hash: true,
+      katex: {
+        version: "latest",
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        ignoredTags: ["script", "noscript", "style", "textarea", "pre"],
+      },
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [
+        RevealZoom,
+        RevealMath.KaTeX,
+        RevealMarkdown,
+        RevealHighlight,
+        RevealNotes,
+      ],
+    });
+  </script>
+</body>
+
+</html>
