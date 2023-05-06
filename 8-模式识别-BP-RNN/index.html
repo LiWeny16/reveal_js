@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="decription" content="OCSVM&&BP&&RNN" />
+  <meta name="keywords" content="OCSVM,RNN,LSTM,大聪花,bigonion,大葱花,puzzle,OpenAI,Markdwon,Music" />
+  <meta name="author" content="bigonion,bigonion@bigonion.cn" />
+  <meta name="robots" content="index,follow" />
+  <title>OCSVM&&BP&&RNN</title>
+  <link rel="stylesheet" href="dist/reset.css" />
+  <link rel="stylesheet" href="dist/reveal.css" />
+  <link rel="stylesheet" href="dist/theme/beige.css" />
+  <link rel="stylesheet" href="./custom/index.css" />
+  <link rel="stylesheet" href="./custom/githubMarkdownCss.css" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- 1封面标题-->
+      <section data-background="black" data-transition="convex">
+        <h2>OCSVM&&BP&&RNN</h2>
+        <hr />
+
+        <p2 style="font-size: 4vh !important">马顺欣，黎文宇，余涛，张雨晴，王思颖 </p2>
+      </section>
+      <!-- 2 小标题 -->
+      <section>
+        <h2>One-Class-SVM</h2>
+      </section>
+      <section>
+        <h2>原理分析</h2>
+      </section>
+      <section>
+        <section data-markdown>
+          ### 原问题条件
+          `$$\begin{equation}
+          f(x)= \mathrm{sgn}(\mathbf{w}^{\phi}\cdot z +b)=\mathrm{sgn}(\sum_{i=1}^{n}\alpha_iy_i(x_i\cdot x)+b)
+          \end{equation} $$`
+        </section>
+        <section data-markdown>
+          ### 替换原向量内积为核函数
+          `$$\begin{equation}
+          f(x)= \mathrm{sgn}(\mathbf{w}^{\phi}\cdot z
+          +b)=\mathrm{sgn}(\sum_{i=1}^{n}\alpha_iy_i(\varphi(x_i)\cdot\varphi(x))+b)
+          \end{equation} $$`
+        </section>
+        <section data-markdown>
+          ### 优化问题变成了
+          `
+          $$
+          \begin{equation}
+          \mathrm{max} \qquad Q(\alpha) =
+          \sum_{i=1}^n\alpha_i-\frac{1}{2}\sum_{i,j=1}^n\alpha_i\alpha_jy_iy_j(\varphi(x_i)\cdot\varphi(x_j))
+          \end{equation}
+          \\
+          \mathrm{s.t.} \sum_{i=1}^{n}y_i\alpha_i =0
+          \\
+          0\le\alpha_i\le \mathrm{C}, \qquad i=1,\cdots,n
+          $$`
+          避免了高维空间的运算
+        </section>
+      </section>
+      <section>
+        <h3>代码展示- 线性核函数</h3>
+      </section>
+
+      <!-- 3 代码展示 -->
+      <section data-line-numbers>
+        <h2>必要库导入</h2>
+        <pre><code data-line-numbers="1-29" >import csv  # 用于读取 csv 文件 #
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.font_manager
+from sklearn import svm
+            </code></pre>
+      </section>
+      <!-- 4 全屏代码展示 -->
+      <section data-transition="convex">
+        <!-- 3.1 -->
+        <section>
+          <h2>函数定义</h2>
+        </section>
+        <!-- 3.2 -->
+        <section class="" data-line-numbers>
+          <br>
+          <h2>读取函数</h2>
+          <pre class=""><code data-line-numbers="1-10 " >
+              def read_row(filename, rowno):
+              data = []
+              with open(filename) as csvfile:
+                  csv_reader = csv.reader(csvfile)
+                  for row in csv_reader:
+                      data.append(row[rowno])
+              for i in range(len(data)):
+                  data[i] = float(data[i])
+              return data
+                </code></pre>
+        </section>
+      </section>
+
+      <!-- 5 zoom动画-->
+      <section data-transition="zoom">
+        <section data-transition="convex">
+          <h2>试验过程</h2>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-81" >
+# 使用`svm.OneClassSVM(nu=0.1, kernel='linear').fit(myTrain)`,线性核函数来训练
+trainSerialNum =[]
+myTrain = read_row(r'/content/drive/MyDrive/Colab Notebooks/assets/Train_data.csv', 0)
+myTest = read_row(r'/content/drive/MyDrive/Colab Notebooks/assets/Test_data1.csv', 0)
+for i in range(4000):
+  trainSerialNum.append(i)
+
+for i in range(len(myTrain)):
+  myTrain[i]=[myTrain[i]]
+for i in range(len(myTest)):
+  myTest[i]=[myTest[i]]
+
+clf = svm.OneClassSVM(nu=0.1, kernel='linear').fit(myTrain)
+myTrain=np.array(myTrain)
+myTest=np.array(myTest)
+y_pred_train = clf.predict(myTrain)
+y_pred_test = clf.predict(myTest)
+print("train",y_pred_train[1900:2100])
+print("test",y_pred_test[1900:2100])
+Z = clf.decision_function(myTest.reshape(-1, 1))
+plt.plot(trainSerialNum,Z)
+plt.show()
+print(Z)
+              </code></pre>
+        </section>
+        <section>
+          <h3 class="P4">输出</h3>
+        </section>
+        <section data-markdown>
+          ```py
+          train [-1 -1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 -1 -1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1]
+          test [-1 -1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1]
+          ```
+
+          #### 可以看到，线性核函数无法正确区分正常数据和异常数据
+        </section>
+        <section data-transition="convex">
+          <br>
+          <h3>数据到超平面的距离-线性核函数</h3>
+          <img class="smallPic" src="./assets/pic/1.png" alt="1" />
+        </section>
+        <section>
+          用线性核函数无法区分的原因是：因为线性核函数SVM是向原点做一条直线来区分正常样本和异常样本，在这里如果做一条直线，当数据是向大的方向增长的时候，面向原点做的决策超平面没办法区分同向增长的异常数据，即无法区分向原点更远的异常样本
+        </section>
+      </section>
+      <section>
+        <section>
+          <h3>
+            所以我们引入高斯核函数来升维</h3>
+          <p>svm.OneClassSVM(nu=0.1, kernel='rbf',gamma=0.1).fit</p>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-17|18-39|39-43" >
+            import csv  # 用于读取 csv 文件 #
+            import numpy as np
+            import matplotlib.pyplot as plt
+            import matplotlib.font_manager
+            from sklearn import svm
+            
+            def read_row(filename, rowno):
+                data = []
+                with open(filename) as csvfile:
+                    csv_reader = csv.reader(csvfile)
+                    for row in csv_reader:
+                        data.append(row[rowno])
+                for i in range(len(data)):
+                    data[i] = float(data[i])
+                return data
+                
+            trainSerialNum =[]
+            myTrain = read_row(r'/content/drive/MyDrive/Colab Notebooks/assets/Train_data.csv', 0)
+            myTest = read_row(r'/content/drive/MyDrive/Colab Notebooks/assets/Test_data1.csv', 0)
+            for i in range(4000):
+              trainSerialNum.append(i)
+            
+            for i in range(len(myTrain)):
+              myTrain[i]=[myTrain[i]]
+            for i in range(len(myTest)):
+              myTest[i]=[myTest[i]]
+            
+            clf = svm.OneClassSVM(nu=0.1, kernel='rbf',gamma=0.1).fit(myTrain)
+            myTrain=np.array(myTrain)
+            myTest=np.array(myTest)
+            y_pred_train = clf.predict(myTrain)
+            y_pred_test = clf.predict(myTest)
+            print("train",y_pred_train[1900:2100])
+            print("test",y_pred_test[1900:2100])
+            Z = clf.decision_function(myTest.reshape(-1, 1))
+            plt.plot(trainSerialNum,Z)
+            plt.show()
+            print(Z)
+            n_error_train = y_pred_train[y_pred_train == -1].size
+            n_error_test = y_pred_test[y_pred_test == -1].size
+            print("训练集错误个数",n_error_train)
+            print("测试集错误个数",n_error_test)
+              </code></pre>
+        </section>
+        <section>
+          <h3>输出</h3>
+        </section>
+        <section data-markdown>
+          ### 输出结果
+
+          ```py
+          # Rbf
+          train [ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 -1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1]
+          test [ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1]
+
+          训练集错误个数 400
+          测试集错误个数 2198
+          ```
+        </section>
+        <section data-transition="convex">
+          <br>
+          <h3>数据到超平面的距离-高斯核函数</h3>
+          <img class="smallPic" src="./assets/pic/2.png" alt="1" />
+        </section>
+        <section>
+          但是，训练集在用这个模型的时候的误报数目达到了400个，我们调小nu到0.01，减小后可以看到误报率减少到了37个
+        </section>
+        <section data-markdown>
+          ```py
+          # Rbf
+          train [ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 -1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1]
+          test [ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+          1 1 1 1 1 1 1 1 1 1 1 1 1 1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+          -1 -1 -1 -1 -1 -1 -1 -1]
+
+          训练集错误个数 37
+          测试集错误个数 2021
+          ```
+        </section>
+        <section>
+          我们观察nu=0.1和0.01的时候训练数据到超平面的距离
+        </section>
+
+        <!--  -->
+        <section class="GRID2 fullSectionWidth" data-transition="convex">
+          <div class="FLEX COL">
+            <div class="P4">
+              <h3>nu=0.1</h3>
+            </div>
+            <div>
+              <img class="smallPic NOMARGIN" src="./assets/pic/nu=0.1.png" alt="网络不佳" />
+            </div>
+          </div>
+          <div class="FLEX COL">
+            <div class="P4">
+              <h3>nu=0.01</h3>
+            </div>
+            <div>
+              <img class="smallPic NOMARGIN"
+                src="./assets/pic/%E6%B5%8B%E8%AF%95%E6%95%B0%E6%8D%AE%E5%88%B0%E8%B6%85%E5%B9%B3%E9%9D%A2%E7%9A%84%E8%B7%9D%E7%A6%BBnu=0.01.png"
+                alt="网络不佳" />
+            </div>
+          </div>
+        </section>
+        <section>
+          可以看出nu越小，数据到超平面的距离越大，所以我们调小nu会获得更好的性能与更少的误报率
+        </section>
+        <section>
+          我们通过遍历找出nu=0.1时与超平面距离小于0.000001的点的序列号<br>
+          <img class="smallPic" src="assets/pic/3.png" alt="5">
+        </section>
+        <section>
+          发现第688个,3136个是最接近超平面的点，他们就是分界线
+          绘制时候的分界线图
+          <img class="smallPic" src="assets/pic/border.png" alt="5">
+        </section>
+        <section>
+          <p class="P4">
+            我们再把nu调小到0.01
+            分界线变得更宽 <br>
+            [0.28405475] <br>
+            [0.24934578] <br>
+          </p>
+          <img class="smallPic P4" src="assets/pic/border2.png" alt="5">
+          <p class="P4">可以看到范围更加宽容效果更好，同时误报率更低了</p>
+
+        </section>
+        <section>
+          加入测试数据<br>
+          <img class="smallPic" src="./assets/pic/%E6%B5%8B%E8%AF%95%E8%AE%AD%E7%BB%83%E5%90%8C%E6%97%B6.png"
+            alt=""><br>
+          可以看到正常数据和异常数据被很明显的区分开了
+        </section>
+      </section>
+
+      <section>
+        <h3>BP神经网络</h3>
+      </section>
+      <section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-6|7-23|24-44" >
+            # import 必要的库
+            import numpy as np
+            import csv  # 用于读取 csv 文件 #
+            import numpy as np
+            import matplotlib.pyplot as plt
+            # 定义 sigomoid 函数
+            def sigmoid(x, deriv = False):
+                if(deriv == True):
+                    return x*(1-x)
+                else:
+                    return 1/(1+np.exp(-x))
+            # 定义读取函数
+            def read_row(filename, rowno):
+                data = []
+                with open(filename) as csvfile:
+                    csv_reader = csv.reader(csvfile)
+                    for row in csv_reader:
+                        data.append(row[rowno])
+                for i in range(len(data)):
+                    data[i] = float(data[i])
+                return data
+            
+            def read_array(filename):
+              data = []
+              with open(filename) as f:
+                reader = csv.reader(f)
+                # print(type(reader))
+                for row in reader:
+                    # print(row)
+                    data.append(row)
+                return data
+            
+            
+            def read_all(filename):
+                data = []
+                with open(filename) as csvfile:
+                    csv_reader = csv.reader(csvfile)
+                    for row in csv_reader:
+                        data.append(row)
+                for i in range(len(data)):
+                    for j in range(len(data[0])):
+                        data[i][j] = float(data[i][j])
+                return data
+                        </code></pre>
+        </section>
+
+
+        <section>
+          归一化数据并定义输入层
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-9|7-23|24-44" >
+            train_data = np.array(read_all(r'/content/drive/MyDrive/Colab Notebooks/assets/Train_data.csv'))
+            test_data1 = np.array(read_all(r'/content/drive/MyDrive/Colab Notebooks/assets/Train_data.csv'))
+            # test_data2 = np.array(read_all(r'.\Test_data2.csv'))
+            normal_data = train_data - np.mean(train_data,axis=0)
+            normal_data = normal_data / np.max(normal_data,axis=0)
+            # normal_data = 1 / (1 + np.exp(-1*normal_data))
+            # 输出4000个行向量形式的归一化的训练样本
+            # print(normal_data)
+            
+            row_data = read_array(r'/content/drive/MyDrive/Colab Notebooks/assets/Train_data.csv')
+            row_data_test = read_array(r'/content/drive/MyDrive/Colab Notebooks/assets/Train_data.csv')
+            
+            row_data=np.array(row_data).astype(float)
+            row_data_test=np.array(row_data_test).astype(float)
+            
+            trainSerialNum =[]
+            myTrain = read_row(r'/content/drive/MyDrive/Colab Notebooks/assets/Train_data.csv', 0)
+            myTest = read_row(r'/content/drive/MyDrive/Colab Notebooks/assets/Test_data1.csv', 0)
+            for i in range(4000):
+              trainSerialNum.append(i)
+            X =normal_data
+            X =sigmoid(X)#套sigmoid
+            w=0.1 #学习率
+            print("x=\n",X)
+            #output dataset
+            y = X
+            print(y.shape)
+                        </code></pre>
+        </section>
+        <section data-markdown="">
+          输出
+
+          ```py
+          x=
+           [[0.54267343 0.48753704 0.52197828 ... 0.4959328  0.44357389 0.52768366]
+           [0.55608634 0.5705933  0.6570743  ... 0.49694656 0.53618717 0.65927855]
+           [0.5356924  0.51854783 0.48683256 ... 0.46946968 0.42705412 0.60785179]
+           ...
+           [0.41472254 0.54365379 0.4474451  ... 0.59776138 0.4562449  0.441306  ]
+           [0.42853567 0.57622004 0.45899523 ... 0.61771671 0.49341652 0.63201194]
+           [0.43521089 0.46118226 0.41941947 ... 0.54287081 0.53031736 0.52123107]]
+          (4000, 31)
+          ```
+          输入层是4000*31维的归一化后数据
+        </section>
+        <section>
+          <h3>定义权重</h3>
+        </section>
+        <section class="">
+          <pre class="fullPreCode"><code data-line-numbers="1-9|7-23" >
+            weight01 = 2*np.random.random(( X.shape[1] ,4)) - 1
+            weight12 = 2*np.random.random((4,2)) - 1
+            weight23 = 2*np.random.random((2,y.shape[1])) - 1
+            # print(weight01,"\n",weight12,"\n",weight23)
+            #初始化偏倚
+            b1 = 2*np.random.random((1,4)) - 1
+            b2 = 2*np.random.random((1,2)) - 1
+            b3 = 2*np.random.random((1,y.shape[1])) - 1
+            
+            bias1 = b1
+            bias2 = b2
+            bias3 = b3
+            for i in range(X.shape[0]-1):
+             bias1 = np.vstack((bias1,b1))
+            for i in range(X.shape[0]-1):
+             bias2 = np.vstack((bias2,b2))
+            for i in range(X.shape[0]-1):
+             bias3 = np.vstack((bias3,b3))
+                        </code></pre>
+        </section>
+        <section>
+          <h3>开始训练</h3>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-11|7-23|23-31" >
+            for j in range(6000):
+            I0 = X
+            O0=I0
+            # 输入层
+            I1=np.dot(O0,weight01)+bias1
+            O1=sigmoid(I1)
+            I2=np.dot(O1,weight12)+bias2
+            O2=sigmoid(I2)
+            I3=np.dot(O2,weight23)+bias3
+            O3=sigmoid(I3)
+        
+            f3_error = y-O3
+        
+            f3_delta = f3_error*sigmoid(O3,deriv = True)
+            f2_error = f3_delta.dot(weight23.T)
+        
+            f2_delta = f2_error*sigmoid(O2,deriv = True)
+            f1_error = f2_delta.dot(weight12.T)
+        
+            f1_delta = f1_error*sigmoid(O1,deriv = True)
+        
+        
+            weight23 += O2.T.dot(f3_delta)*w #调整权重
+            weight12 += O1.T.dot(f2_delta)*w
+            weight01 += O0.T.dot(f1_delta)*w
+        
+            bias3 += f3_delta*w #调整偏倚
+            bias2 += f2_delta*w
+            bias1 += f1_delta*w
+                        </code></pre>
+        </section>
+        <section data-transition="convex">
+          <br>
+          <h3>输出结果</h3>
+          <img class="smallPic" src="assets/svg/Figure_1.svg" alt="1" />
+        </section>
+        <section data-transition="convex">
+          <br>
+          <h3>输出结果</h3>
+          <img class="smallPic" src="assets/svg/Figure_2.svg" alt="1" /><br>
+          <p>[1978, 32, 1968, 22]</p>
+        </section>
+      </section>
+      <section>
+        <section>
+          <h2>RNN & LSTM</h2>
+        </section>
+        <section>
+          <h3 class="P4">函数定义-数据读取</h3>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-9|9-19|20-27|20-31" >
+            import os
+            os.environ['KMP_DUPLICATE_LIB_OK']='True'
+            
+            import csv  # 用于读取 csv 文件 #
+            import matplotlib.pyplot as plt  # 用于绘图 #
+            import numpy as np
+            import tensorflow
+            
+            def read_all(filename):
+                data = []
+                with open(filename) as csvfile:
+                    csv_reader = csv.reader(csvfile)
+                    for row in csv_reader:
+                        data.append(row)
+                for i in range(len(data)):
+                    for j in range(len(data[0])):
+                        data[i][j] = float(data[i][j])
+                return data
+            train_data = np.array(read_all(r'.\Train_data.csv'))
+            test_data1 = np.array(read_all(r'.\Test_data1.csv'))
+            # test_data2 = np.array(read_all(r'.\Test_data2.csv'))
+            normal_train_data = train_data - np.mean(train_data,axis=0)
+            normal_train_data = normal_train_data / np.max(normal_train_data,axis=0)
+            normal_train_data = 1 / (1 + np.exp(-1*normal_train_data))
+            normal_train_data = np.array(normal_train_data)
+            
+            normal_test_data = test_data1 - np.mean(train_data,axis=0)
+            normal_test_data = normal_test_data / np.max(normal_test_data,axis=0)
+            normal_test_data = 1 / (1 + np.exp(-1*normal_test_data))
+            normal_test_data = np.array(normal_test_data)
+                
+                
+                        </code></pre>
+        </section>
+        <section>
+         假设数据一直正常，让一个模型预测接下来会怎样
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-22|22-40" >
+            X_train = []
+            y_train = []
+            for i in range(32, normal_train_data.shape[0]):
+                X_train.append(normal_train_data[i-32:i, 0])
+                y_train.append(normal_train_data[i,0])
+            X_train = np.array(X_train)
+            y_train = np.array(y_train)
+            X_train = np.reshape(X_train, (X_train.shape[0], X_train.shape[1], 1))
+            
+            regressor = tensorflow.keras.models.Sequential()
+            regressor.add(tensorflow.keras.layers.LSTM(units = 32, return_sequences = True, input_shape = (X_train.shape[1], 1)))
+            regressor.add(tensorflow.keras.layers.Dropout(0.1))
+            regressor.add(tensorflow.keras.layers.LSTM(units = 32, return_sequences = True))
+            regressor.add(tensorflow.keras.layers.Dropout(0.1))
+            regressor.add(tensorflow.keras.layers.LSTM(units = 32))
+            regressor.add(tensorflow.keras.layers.Dropout(0.1))
+            regressor.add(tensorflow.keras.layers.Dense(units = 1))
+            regressor.compile(optimizer = 'adam', loss = 'mean_squared_error')
+            print(regressor.summary())
+            regressor.fit(X_train, y_train, epochs = 50, batch_size = 40)
+            
+            def multi_predict(known, predict):
+              while(predict):
+                  var = regressor.predict(known[-32:].reshape(1,32,1))
+                  print(var)
+                  known = np.concatenate((known, var))
+                  predict -= 1
+              return known
+
+            test = X_train[0]
+            print(test)
+            test = multi_predict(test, 1968)
+            print(test)
+
+
+            plt.plot(normal_test_data[32:,0], color = 'red')
+            plt.plot(test[32:], color = 'blue')
+            plt.show()
+
+                        </code></pre>
+        </section>
+      </section>
+      <section>
+        <section data-background="white" ><h3>结果分析</h3></section>
+        <section data-background="white" >
+          <iframe id="iframe" style="width: 100vw;" height="900vh; overflow:hidden;" src="https://ppt.bigonion.cn/9" frameborder="0"></iframe>
+        </section>
+      </section>
+      <section data-background="black">
+        <h1>Thank you!</h1>
+      </section>
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script src="./custom/index.js"></script>
+  <script src="plugin/math/math.js"></script>
+  <script src="./plugin/zoom/zoom.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.configure({
+      keyboard: {
+        13: "next", // go to the next slide when the ENTER key is pressed
+        87: "up",
+        68: "next",
+        65: "left",
+        83: "down",
+        // 32: null, // don't do anything when SPACE is pressed (i.e. disable a reveal.js default binding)
+      },
+    });
+    Reveal.initialize({
+      hash: true,
+      katex: {
+        version: "latest",
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        ignoredTags: ["script", "noscript", "style", "textarea", "pre"],
+      },
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [
+        RevealZoom,
+        RevealMath.KaTeX,
+        RevealMarkdown,
+        RevealHighlight,
+        RevealNotes,
+      ],
+    });
+  </script>
+  <!-- <script type="module">
+      import app from "./custom/module/index.js";
+      app();
+    </script> -->
+</body>
+
+</html>
