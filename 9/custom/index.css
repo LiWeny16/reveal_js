@@ -31,14 +31,19 @@ code {
 /* 图像 */
 .smallPic{
   height: 40%;
+  height: 50vh;
 }
 .midPic{
   height: 60%;
+  height: 70vh;
 }
 .bigPic{
   height:80vh !important;
 }
-
+#iframe{
+  width: 100vw !important;
+  height: 100vh !important;
+}
 
 
 .chartPic{
