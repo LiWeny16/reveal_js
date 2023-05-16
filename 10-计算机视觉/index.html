@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="decription" content="描述" />
+  <meta name="keywords" content="关键词,大聪花,bigonion,大葱花,puzzle,OpenAI,Markdwon,Music" />
+  <meta name="author" content="bigonion,bigonion@bigonion.cn" />
+  <meta name="robots" content="index,follow" />
+  <title>基于最大似然估计和核密度估计的单变量故障检测及统计</title>
+  <link rel="stylesheet" href="dist/reset.css" />
+  <link rel="stylesheet" href="dist/reveal.css" />
+  <link rel="stylesheet" href="dist/theme/white-contrast.css" />
+  <link rel="stylesheet" href="./custom/index.css" />
+  <link rel="stylesheet" href="./custom/githubMarkdownCss.css" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <!-- Theme used for syntax highlighted code -->
+  <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <!-- 1封面标题-->
+      <section data-background="black" data-transition="convex">
+        <h2>U-Net：用于生物医学图像分割的卷积网络</h2>
+        <hr />
+
+        <p2 style="font-size: 4vh !important">黎文宇、蔡泓鑫、马顺欣</p2>
+      </section>
+      <!-- 2 小标题 -->
+      <section>
+        <h2>问题发现与分析</h2>
+      </section>
+      <section data-transition="convex">
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第一个问题，对于大部分神经网络来说，要想获得良好的性能，需要用大量的标签数据进行训练，这对生物医学图像来说，是非常困难并且难以实现的</li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第一个问题，对于大部分神经网络来说，要想获得良好的性能，需要用大量的标签数据进行训练，这对生物医学图像来说，是非常困难并且难以实现的</li>
+            <li type="circle" data-id="box" class="P4">
+              第二个问题，当时最好的网络速度慢，有大量重叠冗余的训练，并且不能平衡好定位精度和全局信息的关系
+            </li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第一个问题，对于大部分神经网络来说，要想获得良好的性能，需要用大量的标签数据进行训练，这对生物医学图像来说，是非常困难并且难以实现的</li>
+            <li type="circle" data-id="box" class="P4">
+              第二个问题，当时最好的网络速度慢，有大量重叠冗余的训练，并且不能平衡好定位精度和全局信息的关系
+            </li>
+            <li type="circle" data-id="box" class="P4">
+              第三个问题，在分割细胞图像时，如何分离互相接触的同类细胞，这也是一个挑战
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section data-transition="zoom">
+        <h3>如何解决这些问题？</h3>
+      </section>
+      <section data-transition="convex">
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第一个问题，对于大部分神经网络来说，要想获得良好的性能，需要用大量的标签数据进行训练，这对生物医学图像来说，是非常困难并且难以实现的
+            </li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第一个问题，对于大部分神经网络来说，要想获得良好的性能，需要用大量的标签数据进行训练，这对生物医学图像来说，是非常困难并且难以实现的
+            </li>
+            <li type="circle" data-id="box" class="P4">
+              解决方法：对量少的训练图像进行弹性变形来大幅扩展数据，从而解决训练数据集的限制。
+            </li>
+          </ul>
+        </section>
+        <!--  -->
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第二个问题，当时最好的网络速度慢，有大量重叠冗余的训练，并且不能平衡好定位精度和全局信息的关系
+            </li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第二个问题，当时最好的网络速度慢，有大量重叠冗余的训练，并且不能平衡好定位精度和全局信息的关系
+            </li>
+            <li type="circle" data-id="box" class="P4">
+              解决方法：提出一个U型网络结构，也就是我们说的U-Net，通过在常规的压缩层后增加扩展层，将图像的全局信息传播到分辨率更高的层，以产生更精确的分割；并且它只需要少量的训练数据。
+            </li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第三个问题，在分割细胞图像时，如何分离互相接触的同类细胞，这也是一个挑战
+            </li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4">
+              第三个问题，在分割细胞图像时，如何分离互相接触的同类细胞，这也是一个挑战
+            </li>
+            <li type="circle" data-id="box" class="P4">
+              解决方法：给接触细胞的边界赋予更大的权重，使用加权损失函数来分离接触的细胞。
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section data-transition="fade-In convex-out">
+        <section>
+          <h3>数据增强</h3>
+        </section>
+        <section>
+          <p class="P4">当只有很少的训练样本可用时，数据扩充对于教会网络所需的不变性和鲁棒性是至关重要的。(平移和旋转不变性，对变形和灰度值变化有鲁棒性)
+            通过弹性形变处理训练数据从而扩展图像，在生物医学分割中特别重要也很常见，因为变形是生物组织中最常见的变化，可以有效地模拟真实的变形。因此可以有效增强网络的鲁棒性。</p>
+        </section>
+        <section data-auto-animate data-transition="convex" class="NOLIST">
+          <ul>
+            <li type="circle" data-id="box" class="P4 NOLIST">
+              <img src="./assets/pic/细胞.jfif" alt="">
+            </li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box" class="P4 NOLIST">
+              <p>随机变形、旋转等不规则变化来增强图像</p>
+            </li>
+            <li type="circle" data-id="box" class="P4 NOLIST">
+              <img src="./assets/pic/细胞.jfif" style="transform: skew(10deg) !important;" alt="">
+            </li>
+          </ul>
+        </section>
+      </section>
+      <section data-transition="convex">
+        <h3>网络结构</h3>
+      </section>
+      <section>
+        <!-- 总图 -->
+        <section data-transition="convex">
+          <p class="P4">网络由左边的收缩网络和右边的扩张网络组成，这两部分网络是完全对称的，并在相同层之间通过concatenation操作进行连接。这样的网络结构像一个U，所以称他为U-net。</p>
+          <img class="midPic" src="./assets/pic/网络结构.png" alt="">
+        </section>
+        <!-- 收缩 -->
+        <section data-transition="convex">
+          <p class="P4">
+            收缩网络部分，是典型的卷积网络结构，每一层由两次卷积和最大池化操作组成；concatenation部分包括复制和裁剪操作
+          </p>
+          <img class="midPic" src="./assets/pic/收缩网络.png" alt="">
+        </section>
+        <!-- 卷积图 -->
+        <section>
+          <p class="P4">
+            收缩网络由4层组成，它的每一层，对于输入图像，首先进行两次3x3的卷积，进行特征提取。然后，用ReLU激活函数增强非线性，避免了梯度爆炸和梯度消失问题。每次进行3x3的卷积，图像就会丢掉一个像素宽度的边界信息。因此，图像尺寸在不断减小。
+          </p>
+          <img src="./assets/pic/收缩卷积图.png" alt="">
+        </section>
+
+        <!-- 池化 -->
+        <section>
+          <p class="P4">两次卷积过后，进行2x2的max pool最大池化操作，来进行特征选择和信息过滤。max-pooling提取显著特征的同时降低模型的参数，从而降低模型的过拟合。操作过后的feature
+            map的分辨率会减小为原来的一半，并且图像的x-y 尺寸也会减半。</p>
+          <img src="./assets/pic/收缩池化.png" alt="">
+        </section>
+        <section data-transition="convex">
+          <p class="P4">上下采样原理图</p>
+          <img src="./assets/pic/上下采样原理图.png" alt="">
+        </section>
+        <!-- 扩张网络 -->
+        <section data-transition="convex">
+          <p class="P4">扩张网络与收缩网络是对称的，首先对输入图像进行2x2的上卷积操作来上采样，将feature map还原到原图大小。</p>
+          <img class="midPic" src="./assets/pic/复原网络.png" alt="">
+        </section>
+        <section data-transition="convex">
+          <p class="P4">上采样</p>
+          <img src="./assets/pic/上采样.png" alt="">
+        </section>
+
+        <!-- 拼接-->
+        <section data-transition="convex">
+          <p class="P4">拼接收缩网络和复原网络</p>
+          <img src="./assets/pic/拼接网络.png" alt=""><br>
+          <p2 class="P4">最后输出的是一层前景和一层背景，前景是分割出来的物体</p2>
+        </section>
+        <section>
+          <p class="P4">白色的是前景（细胞）黑色的是背景</p>
+          <img src="./assets/pic/前景背景.png" alt="" class="midPic">
+        </section>
+      </section>
+      <section data-background-image="./assets/pic/ai.jpg">
+      </section>
+      <section>
+        <section>
+        <p class="P2">训练网络</p>
+        </section>
+        <section data-markdown>
+          ## softmax归一化 
+          `$$p_k(x)=\mathrm{exp}(\alpha_k(x))/(\sum_{k^{'}=1}^{K} \mathrm{exp}(\alpha_{k^{'}}(x)))$$`
+          `$$ E= \sum_{x\in\omega} \omega(x)\mathrm{log}(p_{l(x)}(x)) $$`
+          `$$ \omega(x) = \omega_c(x) + \omega_0\cdot\mathrm{exp}(-\frac{(d_1(x)+d_2(x))^2}{2\sigma^2}) $$`
+        </section>
+        <section data-markdown="">
+          ## softmax例子
+
+          `$$原输出假设为[1,2,3]$$`
+          
+          `$$p1 = \frac{e^1}{e^1+e^2+e^3}$$`
+          `$$p2 = \frac{e^2}{e^1+e^2+e^3}$$`
+          `$$p3 = \frac{e^3}{e^1+e^2+e^3}$$`
+          `$$p1+p2+p3 =1$$`
+          `$$这样e的指数增长特性可以让方差变大$$`
+        </section>
+      </section>
+
+
+      <!-- 3 代码展示 -->
+      <section data-line-numbers>
+        <h2>数据导入</h2>
+        <pre><code data-line-numbers="1-10|13-22|24-31" >
+            </code></pre>
+      </section>
+      <!-- 4 全屏代码展示 -->
+      <section data-transition="convex">
+        <!-- 3.1 -->
+        <section>
+          <h2>函数定义</h2>
+        </section>
+        <!-- 3.2 -->
+        <section>
+          <section class="fullSection" data-line-numbers>
+            <pre class="fullPreCode"><code data-line-numbers="1-10|11-35|37-57|58-75|76-84 " >
+ 
+                </code></pre>
+          </section>
+        </section>
+      </section>
+
+      <!-- 5 zoom动画-->
+      <section data-transition="zoom">
+        <section data-transition="convex">
+          <h2>试验过程</h2>
+        </section>
+        <section class="fullSection">
+          <pre class="fullPreCode"><code data-line-numbers="1-81" >
+           
+              </code></pre>
+        </section>
+      </section>
+      <!-- 6 markdown展示 -->
+      <section data-markdown data-transition="convex">## 结果与分析</section>
+      <!-- 7 图像展示 -->
+      <section data-transition="convex">
+        <section data-transition="convex">
+          <h3>基本任务</h3>
+          <img src="./assets/svg/Figure_1.svg" alt="" />
+        </section>
+        <!-- <section data-transition="convex">
+            <div class="GRID2">
+              <img class="chartPic" src="./assets/svg/Figure_2.svg" alt="" />
+              <img class="chartPic" src="./assets/svg/Figure_3.svg" alt="" />
+            </div>
+          </section> -->
+        <!-- 7.1 文字组合图像 -->
+        <section class="GRID2 fullSectionWidth" data-transition="convex">
+          <div class="FLEX COL">
+            <div class="P4">
+              <h3>介绍</h3>
+            </div>
+            <div>
+              <img class="smallPic NOMARGIN" src="./assets/svg/Figure_2.svg" alt="网络不佳" />
+            </div>
+          </div>
+          <div class="FLEX COL">
+            <div class="P4">
+              <h3>介绍2</h3>
+            </div>
+            <div>
+              <img class="smallPic NOMARGIN" src="./assets/svg/Figure_2.svg" alt="网络不佳" />
+            </div>
+          </div>
+        </section>
+        <!-- <section id="m1">
+            
+          </section> -->
+
+        <!-- <section data-transition="convex" data-background="#ffddee">
+          <h1>4 Pic</h1>
+          <div class="GRID4">
+            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
+            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
+            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
+            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
+          </div>
+        </section> -->
+      </section>
+      <!-- 8  表格展示 -->
+      <section data-transition="convex">
+        <section>
+          <table class="tableFont"></table>
+        </section>
+      </section>
+
+      <!-- 9 列表展示 -->
+      <section data-transition="convex">
+        <section data-auto-animate>
+          <h2 data-id="box">Reveal.js的优点</h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">界面优美</h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">运行简单</h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">功能强大</h2>
+        </section>
+        <section data-auto-animate>
+          <h2 data-id="box" style="color: pink; font-size: 4px">
+            Reveal.js的优点
+          </h2>
+          <h2 data-id="box">界面优美</h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">运行简单</h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">功能强大</h2>
+        </section>
+        <section data-auto-animate>
+          <h2 data-id="box" style="color: pink; font-size: 4px">
+            Reveal.js的优点
+          </h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">界面优美</h2>
+          <h2 data-id="box">运行简单</h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">功能强大</h2>
+        </section>
+        <section data-auto-animate>
+          <h2 data-id="box" style="color: pink; font-size: 4px">
+            Reveal.js的优点
+          </h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">界面优美</h2>
+          <h2 data-id="box" style="color: pink; font-size: 4px">运行简单</h2>
+          <h2 data-id="box">功能强大</h2>
+        </section>
+      </section>
+
+      <!-- 10 列表2展示 -->
+      <section data-transition="convex">
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box">1 列表展示</li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box">1 列表展示</li>
+            <li type="circle" data-id="box" style="font-size: 10vh">
+              2 给老师一点
+            </li>
+          </ul>
+        </section>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box">1 列表展示</li>
+            <li type="circle" data-id="box" style="font-size: 13vh">
+              2 给老师一点
+            </li>
+            <li type="circle" data-id="box" style="font-size: 18vh; color: red">
+              3 小小的js震撼
+            </li>
+          </ul>
+        </section>
+      </section>
+      <!-- 11结束 -->
+      <section data-background="black">
+        <h1>Thank you!</h1>
+      </section>
+    </div>
+  </div>
+
+  <script src="dist/reveal.js"></script>
+  <script src="plugin/notes/notes.js"></script>
+  <script src="plugin/markdown/markdown.js"></script>
+  <script src="plugin/highlight/highlight.js"></script>
+  <script src="./custom/index.js"></script>
+  <script src="plugin/math/math.js"></script>
+  <script src="./plugin/zoom/zoom.js"></script>
+  <script>
+    // More info about initialization & config:
+    // - https://revealjs.com/initialization/
+    // - https://revealjs.com/config/
+    Reveal.configure({
+      keyboard: {
+        13: "next", // go to the next slide when the ENTER key is pressed
+        87: "up",
+        68: "next",
+        65: "left",
+        83: "down",
+        // 32: null, // don't do anything when SPACE is pressed (i.e. disable a reveal.js default binding)
+      },
+    });
+    Reveal.initialize({
+      hash: true,
+      katex: {
+        version: "latest",
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        ignoredTags: ["script", "noscript", "style", "textarea", "pre"],
+      },
+      // Learn about plugins: https://revealjs.com/plugins/
+      plugins: [
+        RevealZoom,
+        RevealMath.KaTeX,
+        RevealMarkdown,
+        RevealHighlight,
+        RevealNotes,
+      ],
+    });
+  </script>
+  <!-- <script type="module">
+      import app from "./custom/module/index.js";
+      app();
+    </script> -->
+</body>
+
+</html>
