@@ -102,3 +102,8 @@ code {
 .tableFont{
   font-size: 26px;
 }
+
+/* Super Code */
+.SCODE{
+  opacity: 0;
+}

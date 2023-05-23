@@ -26,14 +26,14 @@ code {
   font-size: 4vh;
 }
 .P5{
-  font-size: 2.5vh;
+  font-size: 2.5vh !important;
 }
 /* 图像 */
 .smallPic{
-  height: 40vh
+  height: 34vh !important
 }
 .midPic{
-  height: 65vh;
+  height: 60vh;
 }
 .bigPic{
   height:80vh !important;
@@ -109,4 +109,10 @@ code {
 
 .NOLIST li{
   list-style:none;
+}
+
+
+
+#ani_1{
+  transform:scale(0.6) rotate(16deg) skewX(52deg) translateX(2px)  !important;
 }

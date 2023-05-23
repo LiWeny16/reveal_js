@@ -8,7 +8,7 @@
   <meta name="keywords" content="关键词,大聪花,bigonion,大葱花,puzzle,OpenAI,Markdwon,Music" />
   <meta name="author" content="bigonion,bigonion@bigonion.cn" />
   <meta name="robots" content="index,follow" />
-  <title>基于最大似然估计和核密度估计的单变量故障检测及统计</title>
+  <title>U-Net：用于生物医学图像分割的卷积网络</title>
   <link rel="stylesheet" href="dist/reset.css" />
   <link rel="stylesheet" href="dist/reveal.css" />
   <link rel="stylesheet" href="dist/theme/white-contrast.css" />
@@ -28,6 +28,16 @@
         <hr />
 
         <p2 style="font-size: 4vh !important">黎文宇、蔡泓鑫、马顺欣</p2>
+      </section>
+      <section>
+        <section>
+          <h3 class="P4">什么是U-net网络</h3>
+        </section>
+        <section>
+          <p3 class="P4">
+            U-Net是一种用于图像分割的卷积神经网络模型。它由Ronneberger等人在2015年提出，主要应用于医学图像分割领域。U-Net的特点在于通过卷积和池化操作，将输入图像逐步缩小，再通过反卷积和跳跃连接操作，将图像逐步放大。这种结构允许U-Net在分割结果中保留更多的细节信息，从而提高分割质量。U-Net已经在医学影像处理中取得了很大成功，并在其他领域中也得到了广泛应用。
+          </p3>
+        </section>
       </section>
       <!-- 2 小标题 -->
       <section>
@@ -130,17 +140,17 @@
         <section data-auto-animate data-transition="convex" class="NOLIST">
           <ul>
             <li type="circle" data-id="box" class="P4 NOLIST">
-              <img src="./assets/pic/细胞.jfif" alt="">
+              <img data-id="box1" src="./assets/pic/细胞.jfif" alt="">
             </li>
           </ul>
         </section>
         <section data-auto-animate data-transition="convex">
           <ul>
-            <li type="circle" data-id="box" class="P4 NOLIST">
+            <li type="circle" data-id="box1" class="P4 NOLIST">
               <p>随机变形、旋转等不规则变化来增强图像</p>
             </li>
-            <li type="circle" data-id="box" class="P4 NOLIST">
-              <img src="./assets/pic/细胞.jfif" style="transform: skew(10deg) !important;" alt="">
+            <li type="circle" data-id="box1" class="P4 NOLIST">
+              <img id="ani_1" data-id="box1" src="./assets/pic/细胞.jfif" alt="">
             </li>
           </ul>
         </section>
@@ -151,13 +161,13 @@
       <section>
         <!-- 总图 -->
         <section data-transition="convex">
-          <p class="P4">网络由左边的收缩网络和右边的扩张网络组成，这两部分网络是完全对称的，并在相同层之间通过concatenation操作进行连接。这样的网络结构像一个U，所以称他为U-net。</p>
+          <p class="P4">网络由左边的收缩网络和右边的扩张网络组成，这两部分网络是完全对称的，并在相同层之间通过concatenation（连接）操作进行连接。这样的网络结构像一个U，所以称他为U-net。</p>
           <img class="midPic" src="./assets/pic/网络结构.png" alt="">
         </section>
         <!-- 收缩 -->
         <section data-transition="convex">
           <p class="P4">
-            收缩网络部分，是典型的卷积网络结构，每一层由两次卷积和最大池化操作组成；concatenation部分包括复制和裁剪操作
+            收缩网络部分，是典型的卷积网络结构，每一层由两次卷积和最大池化操作组成；concatenation（连接）部分包括复制和裁剪操作
           </p>
           <img class="midPic" src="./assets/pic/收缩网络.png" alt="">
         </section>
@@ -204,176 +214,128 @@
       </section>
       <section>
         <section>
-        <p class="P2">训练网络</p>
+          <p class="P2">训练网络</p>
         </section>
         <section data-markdown>
-          ## softmax归一化 
+          ## softmax归一化
           `$$p_k(x)=\mathrm{exp}(\alpha_k(x))/(\sum_{k^{'}=1}^{K} \mathrm{exp}(\alpha_{k^{'}}(x)))$$`
-          `$$ E= \sum_{x\in\omega} \omega(x)\mathrm{log}(p_{l(x)}(x)) $$`
-          `$$ \omega(x) = \omega_c(x) + \omega_0\cdot\mathrm{exp}(-\frac{(d_1(x)+d_2(x))^2}{2\sigma^2}) $$`
+
         </section>
         <section data-markdown="">
           ## softmax例子
 
           `$$原输出假设为[1,2,3]$$`
-          
-          `$$p1 = \frac{e^1}{e^1+e^2+e^3}$$`
-          `$$p2 = \frac{e^2}{e^1+e^2+e^3}$$`
-          `$$p3 = \frac{e^3}{e^1+e^2+e^3}$$`
+
+          `$$p1 = \frac{e^1}{e^1+e^2+e^3}=0.09$$`
+          `$$p2 = \frac{e^2}{e^1+e^2+e^3}=0.24$$`
+          `$$p3 = \frac{e^3}{e^1+e^2+e^3}=0.665$$`
           `$$p1+p2+p3 =1$$`
-          `$$这样e的指数增长特性可以让方差变大$$`
+          `$$这样e的指数增长特性可以让方差变大,并且归一化$$`
         </section>
-      </section>
-
-
-      <!-- 3 代码展示 -->
-      <section data-line-numbers>
-        <h2>数据导入</h2>
-        <pre><code data-line-numbers="1-10|13-22|24-31" >
-            </code></pre>
-      </section>
-      <!-- 4 全屏代码展示 -->
-      <section data-transition="convex">
-        <!-- 3.1 -->
+        <section data-markdown="">
+          ### 交叉熵损失函数
+          `$$ E= \sum_{x\in\omega} \omega(x)\mathrm{log}(p_{l(x)}(x)) $$`
+          <!-- `$$ \omega(x) = \omega_c(x) + \omega_0\cdot\mathrm{exp}(-\frac{(d_1(x)+d_2(x))^2}{2\sigma^2}) $$` -->
+          `$$二分类交叉熵：L=\frac{1}{N}\sum_i L_i = \frac{1}{N}\sum_i - [y_i\cdot\log(p_i)+(1-y_i)\cdot\log(1-p_i) ]$$`
+          `$$多分类交叉熵：L=\frac{1}{N}\sum_i L_i = -\frac{1}{N}\sum_i \sum_{c=1}^M y_{ic}\log(p_{ic})$$`
+        </section>
+        <section data-markdown="" data-auto-animate>
+          ### 权重
+          <!-- `$$ E= \sum_{x\in\omega} \omega(x)\mathrm{log}(p_{l(x)}(x)) $$` -->
+          `$$ \omega(x) = \omega_c(x) + \omega_0\cdot\mathrm{exp}(-\frac{(d_1(x)+d_2(x))^2}{2\sigma^2}) $$`
+          `$$d1：当前像素到最近细胞边界的距离，d2：当前像素到第二个最近细胞边界的距离$$`
+        </section>
         <section>
-          <h2>函数定义</h2>
+          <p class="P3">通过这个公式，给接触细胞的边界赋予了更大的权重，使网络能够区分出图像中接触细胞之间的小边界。</p>
         </section>
-        <!-- 3.2 -->
-        <section>
-          <section class="fullSection" data-line-numbers>
-            <pre class="fullPreCode"><code data-line-numbers="1-10|11-35|37-57|58-75|76-84 " >
- 
-                </code></pre>
-          </section>
-        </section>
-      </section>
-
-      <!-- 5 zoom动画-->
-      <section data-transition="zoom">
-        <section data-transition="convex">
-          <h2>试验过程</h2>
-        </section>
-        <section class="fullSection">
-          <pre class="fullPreCode"><code data-line-numbers="1-81" >
-           
-              </code></pre>
-        </section>
-      </section>
-      <!-- 6 markdown展示 -->
-      <section data-markdown data-transition="convex">## 结果与分析</section>
-      <!-- 7 图像展示 -->
-      <section data-transition="convex">
-        <section data-transition="convex">
-          <h3>基本任务</h3>
-          <img src="./assets/svg/Figure_1.svg" alt="" />
-        </section>
-        <!-- <section data-transition="convex">
-            <div class="GRID2">
-              <img class="chartPic" src="./assets/svg/Figure_2.svg" alt="" />
-              <img class="chartPic" src="./assets/svg/Figure_3.svg" alt="" />
-            </div>
-          </section> -->
-        <!-- 7.1 文字组合图像 -->
-        <section class="GRID2 fullSectionWidth" data-transition="convex">
-          <div class="FLEX COL">
-            <div class="P4">
-              <h3>介绍</h3>
-            </div>
-            <div>
-              <img class="smallPic NOMARGIN" src="./assets/svg/Figure_2.svg" alt="网络不佳" />
-            </div>
-          </div>
-          <div class="FLEX COL">
-            <div class="P4">
-              <h3>介绍2</h3>
-            </div>
-            <div>
-              <img class="smallPic NOMARGIN" src="./assets/svg/Figure_2.svg" alt="网络不佳" />
-            </div>
-          </div>
-        </section>
-        <!-- <section id="m1">
-            
-          </section> -->
-
-        <!-- <section data-transition="convex" data-background="#ffddee">
-          <h1>4 Pic</h1>
-          <div class="GRID4">
-            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
-            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
-            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
-            <img class="chartPic" src="http://bigonion.cn/background/wallheaven.jfif" alt="" />
-          </div>
+        <!-- <section>
+          <img class="smallPic" src="assets/pic/损失函数公式1.png" alt="">
+          <p class="P4">wc(x)为图像的二值图，</p>
         </section> -->
       </section>
-      <!-- 8  表格展示 -->
-      <section data-transition="convex">
+      <section>
+        <p class="P2">评估网络</p>
+      </section>
+      <section class="GRID2 fullSectionWidth" data-transition="convex">
+        <div class="FLEX COL">
+          <div class="P4">
+            <h3>胶质母细胞瘤细胞PhC-U373</h3>
+          </div>
+          <div>
+            <img class="midPic NOMARGIN" src="assets/pic/评估数据1.png" alt="网络不佳" />
+          </div>
+        </div>
+        <div class="FLEX COL">
+          <div class="P4">
+            <h3>宫颈癌细胞DIC-HeLa</h3>
+          </div>
+          <div>
+            <img class="midPic NOMARGIN" src="assets/pic/数据集2.png" alt="网络不佳" />
+          </div>
+        </div>
+
+      </section>
+      <section>
+        <p class="P4">论文里使用了两个数据集，分别是胶质母细胞瘤细胞PhC-U373、宫颈癌细胞DIC-HeLa，他们分别有35张、20张标签图像数据。
+
+          在这样少量的数据集上训练u-net，并使用IoU交并比来计算分割精确度。下面表格中，在两个数据集上，u-net的IoU分别为0.92、0.77，相较于当时其他算法，它的准确率遥遥领先。</p>
+      </section>
+      <section>
         <section>
-          <table class="tableFont"></table>
+          <p class="P4">下面这些分割示例图也可以看出，对于边界不明显、含有无关内部边界、形状变化大、和背景相似度高、相互接触的细胞结构，u-net的分割结果还是比较好的。</p>
+        </section>
+        <section>
+          <img src="assets/pic/结果分析.png" alt="" class="midPic">
         </section>
       </section>
 
-      <!-- 9 列表展示 -->
-      <section data-transition="convex">
-        <section data-auto-animate>
-          <h2 data-id="box">Reveal.js的优点</h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">界面优美</h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">运行简单</h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">功能强大</h2>
+      <!-- 总结 -->
+      <section>
+        <h3>总结</h3>
+      </section>
+
+      <section data-transition="convex" style="font-size: 4.5vh !important;">
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box">u-net网络结构包含收缩部分和扩展部分，分别用来提取特征信息和提高定位精度；</li>
+          </ul>
         </section>
-        <section data-auto-animate>
-          <h2 data-id="box" style="color: pink; font-size: 4px">
-            Reveal.js的优点
-          </h2>
-          <h2 data-id="box">界面优美</h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">运行简单</h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">功能强大</h2>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box">u-net网络结构包含收缩部分和扩展部分，分别用来提取特征信息和提高定位精度；</li>
+            <li type="circle" data-id="box">
+              网络使用像素级损失函数来学习接触细胞的边界；
+            </li>
+          </ul>
         </section>
-        <section data-auto-animate>
-          <h2 data-id="box" style="color: pink; font-size: 4px">
-            Reveal.js的优点
-          </h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">界面优美</h2>
-          <h2 data-id="box">运行简单</h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">功能强大</h2>
+        <section  data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box">u-net网络结构包含收缩部分和扩展部分，分别用来提取特征信息和提高定位精度；</li>
+            <li type="circle" data-id="box" >
+              网络使用像素级损失函数来学习接触细胞的边界；
+            </li>
+            <li type="circle" data-id="box">
+              使用弹性形变来扩充数据，解决生物医学图像标签数据集量少的问题，并且提高了训练速度；
+            </li>
+          </ul>
         </section>
-        <section data-auto-animate>
-          <h2 data-id="box" style="color: pink; font-size: 4px">
-            Reveal.js的优点
-          </h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">界面优美</h2>
-          <h2 data-id="box" style="color: pink; font-size: 4px">运行简单</h2>
-          <h2 data-id="box">功能强大</h2>
+        <section data-auto-animate data-transition="convex">
+          <ul>
+            <li type="circle" data-id="box">u-net网络结构包含收缩部分和扩展部分，分别用来提取特征信息和提高定位精度；</li>
+            <li type="circle" data-id="box" >
+              网络使用像素级损失函数来学习接触细胞的边界；
+            </li>
+            <li type="circle" data-id="box" >
+              使用弹性形变来扩充数据，解决生物医学图像标签数据集量少的问题，并且提高了训练速度；
+            </li>
+            <li type="circle" data-id="box">
+              u-net能够应用在很多不同的医学图像分割中。
+            </li>
+          </ul>
         </section>
       </section>
 
-      <!-- 10 列表2展示 -->
-      <section data-transition="convex">
-        <section data-auto-animate data-transition="convex">
-          <ul>
-            <li type="circle" data-id="box">1 列表展示</li>
-          </ul>
-        </section>
-        <section data-auto-animate data-transition="convex">
-          <ul>
-            <li type="circle" data-id="box">1 列表展示</li>
-            <li type="circle" data-id="box" style="font-size: 10vh">
-              2 给老师一点
-            </li>
-          </ul>
-        </section>
-        <section data-auto-animate data-transition="convex">
-          <ul>
-            <li type="circle" data-id="box">1 列表展示</li>
-            <li type="circle" data-id="box" style="font-size: 13vh">
-              2 给老师一点
-            </li>
-            <li type="circle" data-id="box" style="font-size: 18vh; color: red">
-              3 小小的js震撼
-            </li>
-          </ul>
-        </section>
-      </section>
+  
       <!-- 11结束 -->
       <section data-background="black">
         <h1>Thank you!</h1>
