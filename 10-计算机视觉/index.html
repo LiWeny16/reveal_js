@@ -62,7 +62,7 @@
         <section data-auto-animate data-transition="convex">
           <ul>
             <li type="circle" data-id="box" class="P4">
-              第一个问题，对于大部分神经网络来说，要想获得良好的性能，需要用大量的标签数据进行训练，这对生物医学图像来说，是非常困难并且难以实现的</li>
+              第 一个问题，对于大部分神经网络来说，要想获得良好。的性能，需要用大量的标签数据进行训练，这对生物医学图像来说，是非常困难并且难以实现的</li>
             <li type="circle" data-id="box" class="P4">
               第二个问题，当时最好的网络速度慢，有大量重叠冗余的训练，并且不能平衡好定位精度和全局信息的关系
             </li>
@@ -208,6 +208,12 @@
         <section>
           <p class="P4">白色的是前景（细胞）黑色的是背景</p>
           <img src="./assets/pic/前景背景.png" alt="" class="midPic">
+        </section>
+        <section>
+          <p class="P4">
+          overlap策略，U-net 的 overlap 策略是将图像进行分割时，在提取 feature map 的过程中，将每个 patch 与相邻 patch 部分重叠，以确保每个像素在 feature map 中被考虑到多次，以提高分割精度。在 U-net 中，每个 patch 的大小被指定为输入图像大小的一部分，因此它们通常会重叠。这种 overlap 策略也有助于避免边界部分的信息损失，并提示神经网络更好地对边界进行处理，因此可以生成更准确的分割结果。
+
+          </p>
         </section>
       </section>
       <section data-background-image="./assets/pic/ai.jpg">
