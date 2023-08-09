@@ -1,17 +1,63 @@
 import React from "react"
-import maps from "../../maps-Animation/maps"
+import { useEffect } from "react"
 
 export default function Section(props: any) {
-  // console.log(props)
-  let animation = props.ani
-  if(!animation){
-    animation = "convex"
+  const transition = props.trans
+  const background = props.back
+  const autoAni = props.autoAni
+  const autoAniId = props.autoAniId
+
+  let [finalPropsForSection, setFinalPropsForSection] = React.useState(() => {
+    return {}
+  })
+  function assignProsForSection(data: any, name: string) {
+    if (data) {
+      let additionObj = {}
+      additionObj[`${name}`] = data
+      setFinalPropsForSection((preObj) => {
+        return { ...preObj, ...additionObj }
+      })
+    }
   }
+  useEffect(() => {
+    assignProsForSection(transition, "data-transition")
+    assignProsForSection(background, "data-background-color")
+    assignProsForSection(autoAni, "data-auto-animate")
+    assignProsForSection(autoAniId, "data-auto-animate-id")
+
+    // !transition
+    //   ? 1
+    //   : setFinalPropsForSection((pre) => {
+    //       return {
+    //         ...pre,
+    //         "data-transition": transition
+    //       }
+    //     })
+    // !background
+    //   ? 1
+    //   : setFinalPropsForSection((pre) => {
+    //       return {
+    //         ...pre,
+    //         "data-background-color": background
+    //       }
+    //     })
+    // !autoAni
+    //   ? 1
+    //   : setFinalPropsForSection((pre) => {
+    //       return {
+    //         ...pre,
+    //         "data-auto-animate": autoAni
+    //       }
+    //     })
+  }, [])
+
+  // animation ?? (propsEn.tran = 1)
+  // background ?? (propsEn.back = 1)
   if (props.children) {
     //传送对象
     return (
       <>
-        <section data-transition={animation}>{props.children}</section>
+        <section {...finalPropsForSection}>{props.children}</section>
       </>
     )
   }
@@ -19,7 +65,7 @@ export default function Section(props: any) {
     return (
       <>
         <section
-          data-transition={animation}
+          data-transition={transition}
           dangerouslySetInnerHTML={{ __html: props.html }}
         ></section>
       </>

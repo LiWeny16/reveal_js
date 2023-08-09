@@ -1,7 +1,10 @@
 import React, { useRef, useEffect } from "react"
 import { clueParerAll, latexParse2 } from "@Plugin/clueParser/clue.js"
 import katexCss from "@Plugin/katex/katex.css?raw"
-import clueCss from "clue-parser/index.css?raw"
+import clueCss from "@Plugin/clueParser/index.css?raw"
+import hljsCss from "@Plugin/highlight/monokai.css?raw"
+import githubMdCss from "../../css/githubMdCss.css?raw"
+
 const CustomButton = (md) => {
   const buttonRef = useRef(null)
 
@@ -14,17 +17,18 @@ const CustomButton = (md) => {
       const style = document.createElement("style")
       const styleCustom = document.createElement("style")
 
-      style.textContent = katexCss + clueCss
+      style.textContent = katexCss + clueCss + hljsCss + githubMdCss
       styleCustom.textContent = ``
-      const buttonElement = document.createElement("p")
+      const shadowElement = document.createElement("div")
       clueParerAll(`${md.md} `).then((e) => {
-        buttonElement.innerHTML = e
+        shadowElement.innerHTML = e
       })
-      //   buttonElement.textContent = 'Click me'; // 按钮显示的文本
+      shadowElement.className="markdown-body"
+      //   shadowElement.textContent = 'Click me'; // 按钮显示的文本
 
       shadow.appendChild(style)
       shadow.appendChild(styleCustom)
-      shadow.appendChild(buttonElement)
+      shadow.appendChild(shadowElement)
     }
   }, [])
 

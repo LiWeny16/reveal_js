@@ -4,16 +4,20 @@ import mermaid from "https://npm.elemecdn.com/mermaid@10/dist/mermaid.esm.min.mj
 import hljs from "https://npm.elemecdn.com/@highlightjs/cdn-assets@11.6.0/es/highlight.min.js"
 import katex from 'katex';
 import replaceAsync from "string-replace-async";
-
+marked.use({
+    mangle: false,
+    headerIds: false,
+    strict: false,
+});
 
 export const clueParerAll = async (md, init = "") => {
-        let view = md
-        view = await clueParser(view)
-        view = await latexParse2(view)
-        view = await latexParse(view)
-        view = markedParse(view)
-        hljs.highlightAll()
-        return view
+    let view = md
+    view = await clueParser(view)
+    view = await latexParse2(view)
+    view = await latexParse(view)
+    view = markedParse(view)
+    hljs.highlightAll()
+    return view
 }
 
 export function latexParse2(md, center = true) {
