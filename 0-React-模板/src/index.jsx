@@ -46,6 +46,8 @@ kit
       })
       Reveal.initialize({
         hash: true,
+        dependencies:[
+        ],
         katex: {
           version: "latest",
           delimiters: [

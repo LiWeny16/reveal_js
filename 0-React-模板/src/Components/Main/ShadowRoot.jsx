@@ -17,15 +17,11 @@ const CustomButton = (md) => {
       const style = document.createElement("style")
       const styleCustom = document.createElement("style")
 
-      style.textContent = katexCss + clueCss + hljsCss + githubMdCss
+      style.textContent = clueCss
       styleCustom.textContent = ``
       const shadowElement = document.createElement("div")
-      clueParerAll(`${md.md} `).then((e) => {
-        shadowElement.innerHTML = e
-      })
-      shadowElement.className="markdown-body"
-      //   shadowElement.textContent = 'Click me'; // 按钮显示的文本
-
+      shadowElement.innerHTML = e
+      shadowElement.className = "markdown-body"
       shadow.appendChild(style)
       shadow.appendChild(styleCustom)
       shadow.appendChild(shadowElement)

@@ -6,10 +6,15 @@ export default function Section(props: any) {
   const background = props.back
   const autoAni = props.autoAni
   const autoAniId = props.autoAniId
-
+  const className = props.className
   let [finalPropsForSection, setFinalPropsForSection] = React.useState(() => {
     return {}
   })
+  /**
+   * @description 注册属性名和数值
+   * @param data string
+   * @param name string
+  */
   function assignProsForSection(data: any, name: string) {
     if (data) {
       let additionObj = {}
@@ -57,7 +62,9 @@ export default function Section(props: any) {
     //传送对象
     return (
       <>
-        <section {...finalPropsForSection}>{props.children}</section>
+        <section className={className} {...finalPropsForSection}>
+          {props.children}
+        </section>
       </>
     )
   }
@@ -65,7 +72,7 @@ export default function Section(props: any) {
     return (
       <>
         <section
-          data-transition={transition}
+          {...finalPropsForSection}
           dangerouslySetInnerHTML={{ __html: props.html }}
         ></section>
       </>

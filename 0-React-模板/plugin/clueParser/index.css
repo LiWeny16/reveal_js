@@ -2,6 +2,9 @@
 * @命名规则：原有布局,一律大写,自定义布局,驼峰命名法
 * @author bigonion
  */
+.NONE {
+  display: none !important;
+}
 code {
   font-size: 17px;
 }
@@ -57,8 +60,11 @@ code {
 .smallPic {
   height: 34vh !important;
 }
+.smallPic > img {
+  height: 34vh !important;
+}
 .midPic {
-  height: 60vh;
+  height: 60vh !important;
 }
 .bigPic {
   height: 80vh !important;
@@ -66,7 +72,6 @@ code {
 
 .chartPic {
   width: 86%;
-  /* margin: 0px 20px !important; */
 }
 
 /* 布局 */
@@ -85,13 +90,30 @@ code {
 .COL-REV {
   flex-direction: column-reverse;
 }
-.JUS-CENTER {
+.JUS-CEN {
   justify-content: center;
 }
-.ALI-CENTER {
+.JUS-SPA {
+  justify-content: space-around;
+}
+.ALI-CEN {
   align-items: center;
 }
-
+.ALI-BAS {
+  align-items: baseline;
+}
+.LEFT {
+  text-align: left;
+}
+.LEFT > li {
+  text-align: left;
+}
+.RIGHT {
+  text-align: right;
+}
+.RIGHT > li {
+  text-align: right;
+}
 .GRID4 {
   display: grid;
   grid-template-columns: repeat(2, auto);
@@ -111,6 +133,12 @@ code {
 .NOMARGIN {
   margin: 0 !important;
 }
+.MARGIN-LEFT > * {
+  margin-left: 3vw;
+}
+.MARGIN-RIGHT {
+  margin-right: 3vw;
+}
 
 .fullPreCode {
   height: 80% !important;
@@ -127,9 +155,28 @@ code {
 }
 
 .NOLIST {
-  list-style: none;
+  list-style: none !important;
 }
 
-.NOLIST li {
-  list-style: none;
+.NOLIST > ul > li {
+  list-style: none !important;
+}
+.NOLIST > li {
+  list-style: none !important;
+}
+
+.NOLIST .li {
+  list-style: none !important;
+}
+
+.HOV-BIG:hover {
+  transform: scale(1.2);
+  transition: transform 0.5s ease;
+  z-index: 999;
+  position: relative;
+}
+.HOV-BIG {
+  transition: transform 0.5s ease;
+  transform: scale(1);
+  position: relative;
 }
