@@ -11,14 +11,18 @@ export default function MagicImg(props) {
         <div className={_className}>
           <div className="FLEX COL">
             <div className="P3">
-              <p>{props.data[0]}</p>
+              <p>{props.data[0] ?? ""}</p>
             </div>
             <div>
               <PhotoProvider>
                 <PhotoView src={props.data[1]}>
                   <img
                     className="NOMARGIN HOV-BIG"
-                    style={{ width: props.width ?? "50%" }}
+                    style={{
+                      width: Array.isArray(props.width)
+                        ? props.width[0]
+                        : props.width ?? "50%"
+                    }}
                     src={props.data[1]}
                     alt="网络不佳"
                   />
@@ -29,14 +33,18 @@ export default function MagicImg(props) {
           {props.data[2] && props.data[3] ? (
             <div className="FLEX COL">
               <div className="P3">
-                <p>{props.data[2]}</p>
+                <p>{props.data[2] ?? ""}</p>
               </div>
               <div>
                 <PhotoProvider>
                   <PhotoView src={props.data[3]}>
                     <img
                       className="NOMARGIN HOV-BIG"
-                      style={{ width: props.width ?? "50%" }}
+                      style={{
+                        width: Array.isArray(props.width)
+                          ? props.width[1]
+                          : props.width ?? "50%"
+                      }}
                       src={props.data[3]}
                       alt="网络不佳"
                     />

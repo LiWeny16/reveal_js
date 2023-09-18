@@ -1,7 +1,7 @@
 import { Carousel } from 'antd';
 const contentStyle = {
   margin: 0,
-  height: '100vh',
+  height: '80vh',
   color: 'black',
   lineHeight: '100vh',
   textAlign: 'center',

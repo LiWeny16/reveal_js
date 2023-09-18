@@ -9,6 +9,10 @@ export default defineConfig({
     outDir: "build/P3"
   },
   base: "./",
+  server:{
+    host:"0.0.0.0",
+    port:2333
+  },
   resolve: {
     // ↓路径别名，主要是这部分
     alias: {

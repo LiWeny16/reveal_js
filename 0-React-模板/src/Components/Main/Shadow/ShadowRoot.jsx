@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from "react"
-import { clueParerAll, latexParse2 } from "@Plugin/clueParser/clue.js"
-import katexCss from "@Plugin/katex/katex.css?raw"
+// import { clueParerAll, latexParse2 } from "@Plugin/clueParser/clue.js"
+// import katexCss from "@Plugin/katex/katex.css?raw"
 import clueCss from "@Plugin/clueParser/index.css?raw"
-import hljsCss from "@Plugin/highlight/monokai.css?raw"
-import githubMdCss from "../../css/githubMdCss.css?raw"
+// import hljsCss from "@Plugin/highlight/monokai.css?raw"
+// import githubMdCss from "../../css/githubMdCss.css?raw"
 
 const CustomButton = (md) => {
   const buttonRef = useRef(null)

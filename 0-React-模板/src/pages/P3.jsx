@@ -3,6 +3,7 @@ import Steps from "../Components/Main/Steps"
 import Md from "../Components/Main/Md"
 // import List1 from "../Components/List/List1"
 // import List2 from "../Components/List/List2"
+
 import ListAdd from "../Components/List/ListAdd"
 import Section from "../Components/Main/Section"
 import ShadowMd from "../Components/Main/Shadow/ShadowRootMD"
@@ -11,12 +12,32 @@ import Pie from "../Components/DigitalShow/Pie"
 // import Pic from "../Components/Main/Img/Pic"
 import Code from "../Components/Main/Code/Code"
 import Table from "../Components/DigitalShow/Table"
+
+import outPage from "@Assets/outSidePages/ellipse/index.html?raw"
+
 import MagicImg from "@Main/Img/MagicImg"
+import pNUS from "@Assets/img/pNUS.jpg"
+import Iframe from "../Components/Main/Iframe"
 import p1_1 from "@Assets/img/1-1.png"
-import p3_1 from "@Assets/img/3-1.jpg"
-import p3_2 from "@Assets/img/3-2.jpg"
-import p3_3 from "@Assets/img/3-3.jpg"
-import p3_4 from "@Assets/img/3-4.jpg"
+
+import p2_1 from "@Assets/img/2-1.jpg"
+import p2_2 from "@Assets/img/2-2.jpg"
+import p2_3 from "@Assets/img/2-3.jpg"
+import p2_4 from "@Assets/img/2-4.jpg"
+
+import p3_1_1 from "@Assets/img/3-1-1.jpg"
+import p3_1_2 from "@Assets/img/3-1-2.jpg"
+import p3_1_3 from "@Assets/img/3-1-3.jpg"
+import p3_1_4 from "@Assets/img/3-1-4.jpg"
+
+import p3_2_1 from "@Assets/img/3-2-1.jpg"
+import p3_2_2 from "@Assets/img/3-2-2.jpg"
+import p3_2_3 from "@Assets/img/3-2-3.jpg"
+import p3_2_4 from "@Assets/img/3-2-4.jpg"
+
+import p3_3_1 from "@Assets/img/3-3-1.jpg"
+import p3_3_2 from "@Assets/img/3-3-2.jpg"
+
 import p5_1 from "@Assets/img/5-1.jpg"
 import p5_2 from "@Assets/img/5-2.jpg"
 import p5_3 from "@Assets/img/5-3.jpg"
@@ -32,20 +53,45 @@ import {
 export default function App() {
   return (
     <>
-    {/* Start */}
-      <Section back="black" trans="slide">
-        <div className="P2">Force Feedback Gloves</div>
-        <hr />
-        <div className="P3">Virtual into vital</div>
+      {/* ICON */}
+
+      {/* Start */}
+      <Section trans="slide">
+        <Section back="black">
+          <img
+            style={{ position: "absolute", top: "-107%", left: "40%" }}
+            width={"20%"}
+            src={pNUS}
+            alt=""
+          />
+          <div className="P2">Force Feedback Gloves</div>
+          <hr />
+          <div className="P3">Virtual into vital</div>
+        </Section>
+        <Section back="white">
+          <Iframe
+            style={{
+              width: "100%",
+              innerHeight: "100vh",
+              border: "none",
+              // boxShadow: "rgb(79,79,79) 1vh 2vh 21px",
+              height: "100vh"
+            }}
+            src={"https://ppt.bigonion.cn/0-React-%E6%A8%A1%E6%9D%BF/build/P3/"}
+          ></Iframe>
+        </Section>
       </Section>
-      {/* Dire */}
-      <Section back="#FFDDEE">
+      {/* 目录 */}
+      {/* <Section back="#FFDDEE">
         <Directory></Directory>
-      </Section>
+      </Section> */}
+
       {/* 1. */}
       <Section>
         <Section>
-          <h1>Background</h1>
+          <hr />
+          <h2>1. Background</h2>
+          <hr />
         </Section>
         <ListAdd trans="convex" className="" back="white">
           <ul>
@@ -75,14 +121,37 @@ export default function App() {
             </li>
           </ul>
         </ListAdd>
+        <Section>
+          <MagicImg width="80%" data={[" ", p1_1]} />
+        </Section>
       </Section>
+      {/* 2. */}
+      <Section trans="slide">
+        <Section>
+          <hr />
+          <h2>2. Introduction</h2>
+          <hr />
+        </Section>
+        <Section trans="slide">
+          <h3>Common Gloves</h3>
+          <MagicImg width={["60%", "80%"]} data={[" ", p2_1, " ", p2_2]} />
+        </Section>
+        <Section>
+          <h3>electronic sensors and components</h3>
+          <MagicImg width={["60%", "75vw"]} data={[" ", p2_3, " ", p2_4]} />
+        </Section>
+      </Section>
+
       {/* 3. */}
       <Section>
         <Section trans="zoom">
-          <Md>## 3.Application</Md>
+          <hr />
+          <h2>3. Application</h2>
+          <hr />
         </Section>
+        {/* 3.1 Emotional aspect*/}
         <Section>
-          <h2>Emotional aspect</h2>
+          <h3>3.1 Emotional aspect</h3>
         </Section>
         <ListAdd trans="convex" className="" back="white">
           <ul>
@@ -97,16 +166,10 @@ export default function App() {
         </ListAdd>
         <Section trans="zoom">
           <MagicImg
-            width="80%"
-            data={[
-              "Relate couples",
-              p3_1,
-              "Feel families",
-              p3_2
-            ]}
+            width="70%"
+            data={["Relate Couples", p3_1_1, "Feel Families", p3_1_2]}
           />
         </Section>
-
         <ListAdd>
           <ul>
             <li>
@@ -122,40 +185,91 @@ export default function App() {
         </ListAdd>
         <Section trans="zoom">
           <MagicImg
-            width="100%"
-            data={[
-              "Touch pets",
-              p3_3,
-              "Touch endangered animals",
-              p3_4
-            ]}
+            width="80%"
+            data={["Touch Pets", p3_1_3, "Touch Endangered Animals", p3_1_4]}
           />
         </Section>
-      </Section>
-
-      {/* 5. */}
-      <Section>
-        <Section trans="convex">
-          <Md>## 5. About future</Md>
+        {/* 3.2 HOBBY ASPECT*/}
+        <Section trans="zoom">
+          <h3>3.2 HOBBY ASPECT</h3>
         </Section>
-        <Section trans="convex">
-          <MagicImg width="100%" data={["",p5_3]} />
+        <Section trans="zoom">
+          <MagicImg
+            width="100%"
+            data={["Video Watching", p3_2_1, "Musical Instruments", p3_2_2]}
+          />
         </Section>
         <Section>
           <MagicImg
             width="100%"
-            data={[
-              "Ready Player one",
-              p5_1,
-              "For wearing equipment",
-              p5_2
-            ]}
+            data={["Gaming", p3_2_3, "Art and Design", p3_2_4]}
           />
         </Section>
-      </Section>
 
+        {/* 3.3 */}
+        <Section trans="zoom">
+          <h3>3.3 Application In Medicine</h3>
+        </Section>
+        <Section trans="zoom">
+          <MagicImg width="80%" data={[" ", p3_3_1, " ", p3_3_2]} />
+        </Section>
+      </Section>
+      {/* 4. DEMO */}
       <Section>
-        <Pie />
+        <Section>
+          <hr />
+          <h2>4. DEMO</h2>
+          <hr />
+        </Section>
+        <Section>
+          <p className="P3_5">Long Distance Interaction</p>
+          <hr />
+          <Steps
+            data={[
+              {
+                title: "User",
+                status: "finish",
+                icon: <UserOutlined />
+              },
+              {
+                title: "Internet",
+                status: "finish",
+                icon: <SolutionOutlined />
+              },
+              {
+                title: "Transer",
+                status: "process",
+                icon: <LoadingOutlined />
+              },
+              {
+                title: "User2",
+                status: "wait",
+                icon: <UserOutlined />
+              }
+            ]}
+          ></Steps>
+          <hr />
+        </Section>
+        <Section>
+          <p className="P3_5">Emotional Caring</p>
+        </Section>
+      </Section>
+      {/* 5. */}
+      <Section>
+        <Section trans="convex">
+          <hr />
+          <h2>5. About future</h2>
+          <hr />
+        </Section>
+        <Section trans="convex">
+          <MagicImg width="100%" data={["", p5_3]} />
+        </Section>
+        <Section>
+          <MagicImg
+            width="100%"
+            data={["Ready Player one", p5_1, "For wearing equipment", p5_2]}
+          />
+        </Section>
       </Section>
 
       {/* <Section LISTADD>
@@ -183,44 +297,24 @@ export default function App() {
         </ListAdd>
       
       </Section> */}
-      <ListAdd className="NOLIST MARGIN-LEFT LEFT" back="black">
-        <h2 data-id="box">Force Feedback Gloves</h2>
-        <hr data-id="box" />
-        <li data-id="box" className="P4 NOLIST">
-          <span className="YELLOW">汇报人:</span> 陈启航 <br />
-          <span className="YELLOW">PPT:</span> 黎文宇 <br />{" "}
-          <span className="YELLOW">文案:</span> 马顺欣 <br />{" "}
-          <span className="YELLOW">文字资料:</span> 夏雷、胡权升、马顺欣
-        </li>
-        <li data-id="box" className="P4 NOLIST">
-          {" "}
-          <span className="YELLOW">图片及其他资料: </span>
-          <br />
-          陈启航 黎文宇 谭轩 胡权升 多吉次仁
-          <br /> 张彦 黄正阳 蔡泓鑫 严茁瑞 刘斯诺
-        </li>
-        <hr data-id="box" />
-      </ListAdd>
-      {/* <section>
-          <section data-background="black" data-auto-animate data-auto-animate-id="8">
-            <h2 data-id="box">利己VS利他</h2>
-          </section>
-          <section data-background="black" data-auto-animate data-auto-animate-id="8">
-            <h2 data-id="box">利己VS利他</h2>
-            <hr data-id="box" />
-          </section>
-          <section data-background="black" data-auto-animate data-auto-animate-id="8">
-            <h2 data-id="box">利己VS利他</h2>
-            <hr data-id="box" />
-            <li  data-id="box" class="P4 NOLIST"><span class="YELLOW">汇报人:</span> 陈启航 <br /> <span class="YELLOW">PPT:</span>  黎文宇 <br/> <span class="YELLOW">文案:</span>  马顺欣 <br /> <span class="YELLOW">文字资料:</span> 夏雷、胡权升、马顺欣</li>
-          </section>
-          <section data-background="black" data-auto-animate data-auto-animate-id="8">
-            <hr data-id="box" />
-            <li  data-id="box" class="P4 NOLIST" ><span class="YELLOW">汇报人:</span> 陈启航 <br /><span class="YELLOW">PPT:</span> 黎文宇 <br /> <span class="YELLOW">文案:</span> 马顺欣 <br />  <span class="YELLOW">文字资料:</span> 夏雷、胡权升、马顺欣</li>
-            <li data-id="box" class="P4 NOLIST" > <span class="YELLOW">图片及其他资料: </span><br />陈启航 黎文宇 谭轩 胡权升 多吉次仁<br /> 张彦 黄正阳 蔡泓鑫 严茁瑞 刘斯诺</li>
-            <hr  data-id="box" />
-          </section>
-       </section> */}
+      <Section back="white">
+        <ListAdd className="NOLIST MARGIN-LEFT LEFT" back="black">
+          <h2 data-id="box">OUR Team List</h2>
+          <hr data-id="box" />
+          <li data-id="box" className="P4 NOLIST">
+            Li Wenyu, Chen Xiao, Shi Jiaqi, Xue Yufeng
+          </li>
+          <li data-id="box" className="P4 NOLIST">
+            {/* <span className="YELLOW">图片及其他资料: </span> */}
+            <br />
+            Shan Wenkai, Ding Dang, Zhang Yiyi, Zhao Zifang
+          </li>
+          <hr data-id="box" />
+        </ListAdd>
+      </Section>
+      <Section>
+        <h2> THANK YOU!</h2>
+      </Section>
     </>
   )
 }
