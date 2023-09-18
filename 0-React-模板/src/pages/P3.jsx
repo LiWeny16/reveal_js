@@ -69,6 +69,7 @@ export default function App() {
           <div className="P3">Virtual into vital</div>
         </Section>
         <Section back="white">
+          {/* <Directory /> */}
           <Iframe
             style={{
               width: "100%",
@@ -77,7 +78,7 @@ export default function App() {
               // boxShadow: "rgb(79,79,79) 1vh 2vh 21px",
               height: "100vh"
             }}
-            src={"https://ppt.bigonion.cn/0-React-%E6%A8%A1%E6%9D%BF/build/P3/"}
+            src={"https://bigonion.cn/LiWeny16/Learning/Temp_Websites/ellipse/"}
           ></Iframe>
         </Section>
       </Section>
@@ -122,7 +123,7 @@ export default function App() {
           </ul>
         </ListAdd>
         <Section>
-          <MagicImg width="80%" data={[" ", p1_1]} />
+          <MagicImg width="110%" data={[" ", p1_1]} />
         </Section>
       </Section>
       {/* 2. */}

@@ -1,20 +1,21 @@
 import { Carousel } from 'antd';
 const contentStyle = {
   margin: 0,
-  height: '80vh',
+  height: '90vh',
   color: 'black',
   lineHeight: '100vh',
   textAlign: 'center',
   background: '#FFDDEE',
-  fontSize:"18vh",
-  userSelect: "none"
+  fontSize:"16vh",
+  userSelect: "none",
+  border:"none"
 };
 const App = () => {
   const onChange = (currentSlide) => {
     console.log(currentSlide);
   };
   return (
-    <Carousel afterChange={onChange}>
+    <Carousel style={{border:"none"}} afterChange={onChange}>
       <div>
         <h1 style={contentStyle}>1.Background</h1>
       </div>
