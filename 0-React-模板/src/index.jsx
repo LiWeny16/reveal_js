@@ -2,23 +2,22 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App.jsx"
 import Reveal from "reveal.js"
-// import md from "../plugin/markdown/markdown.esm";
 import notes from "../plugin/notes/notes.esm.js"
 import zoom from "../plugin/zoom/zoom.esm.js"
 import hilight from "../plugin/highlight/highlight.esm.js"
 import kit from "bigonion-kit/index.mjs"
 import "./css/index.css"
 import "@Plugin/clueParser/index.css"
+import "../dist/reset.css"
+import "../dist/reveal.css"
+import "../dist/theme/white.css"
+import "../plugin/katex/katex.css"
+
 let rootElement = document.getElementById("root")
 const root = ReactDOM.createRoot(rootElement)
 root.render(<App />)
-
-// let rootElement1 = document.getElementById("root1");
-// const root1 = ReactDOM.createRoot(rootElement1);
-// root1.render(<App />);
-
 kit
-  .sleep(1)
+  .sleep(100)
   .then(() => {
     ;(() => {
       Array.from(document.querySelectorAll(".SCODE")).forEach((e) => {
@@ -31,7 +30,7 @@ kit
   .then(() => {
     kit.sleep(50).then(() => {
       Reveal.configure({
-        // center:false,
+        center:true,
         // controlsTutorial: false,
         // controlsBackArrows: 'hidden',
         // progress: false,
@@ -46,18 +45,18 @@ kit
       })
       Reveal.initialize({
         hash: true,
-        dependencies:[
-        ],
-        katex: {
-          version: "latest",
-          delimiters: [
-            { left: "$$", right: "$$", display: true },
-            { left: "$", right: "$", display: false },
-            { left: "\\(", right: "\\)", display: false },
-            { left: "\\[", right: "\\]", display: true }
-          ]
-          // ignoredTags: ["script", "noscript", "style", "textarea", "pre"],
-        },
+        dependencies: [],
+        slideNumber:false,
+        // katex: {
+        //   version: "latest",
+        //   delimiters: [
+        //     { left: "$$", right: "$$", display: true },
+        //     { left: "$", right: "$", display: false },
+        //     { left: "\\(", right: "\\)", display: false },
+        //     { left: "\\[", right: "\\]", display: true }
+        //   ]
+        //   // ignoredTags: ["script", "noscript", "style", "textarea", "pre"],
+        // },
         // Learn about plugins: https://Revealjs.com/plugins/
         plugins: [zoom, hilight, notes]
       })

@@ -2,5 +2,5 @@
 
 * {
   pointer-events: auto !important;
-  user-select: auto !important;
+  user-select: none;
 }

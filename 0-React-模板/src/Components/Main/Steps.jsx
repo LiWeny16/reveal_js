@@ -10,7 +10,7 @@ import { useState } from "react"
 import { useEffect } from "react"
 
 const App = (props) => {
-  console.log(props);
+  // console.log(props);
   let [items, setItems] = useState(props.data)
   useEffect(() => {
     setTimeout(() => {

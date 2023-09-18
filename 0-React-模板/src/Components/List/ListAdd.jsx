@@ -2,11 +2,12 @@ import React from "react"
 
 export default function ListAdd(props) {
   const random = Math.round(Math.random() * 10000)
-  function basicSection(content, props, random, key = 1) {
+  function basicSection(content, props, random, key) {
     return (
       <>
         <section
           data-background={props.back ?? "white"}
+          data-transition={props.trans}
           data-auto-animate
           data-auto-animate-id={random}
           className={props.className}

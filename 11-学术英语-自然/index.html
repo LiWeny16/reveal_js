@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="decription" content="描述" />
+    <meta
+      name="keywords"
+      content="关键词,大聪花,bigonion,大葱花,puzzle,OpenAI,Markdwon,Music"
+    />
+    <meta name="author" content="bigonion,bigonion@bigonion.cn" />
+    <meta name="robots" content="index,follow" />
+    <title>Natrue experience</title>
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/white-contrast.css" />
+    <link rel="stylesheet" href="./custom/index.css" />
+    <link rel="stylesheet" href="./custom/githubMarkdownCss.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <!-- Theme used for syntax highlighted code -->
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+    <script src="./custom/module/components/elements.js"></script>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <!-- 1封面标题-->
+        <section data-background="black" data-transition="convex">
+          <h2>Natrue experience</h2>
+          <hr />
+
+          <p2 style="font-size: 4vh !important">bigonion</p2>
+        </section>
+        <!-- 2 小标题 -->
+        <section data-transition="convex">
+          <section>
+            <h2>When?</h2>
+          </section>
+          <section>
+            When I was in the summer vacation of my senior High school
+          </section>
+        </section>
+        <section data-transition="convex">
+          <section>
+            <h2>Where?</h2>
+          </section>
+          <section>Hechi, Guangxi(广西河池)</section>
+        </section>
+        <section data-transition="convex">
+          <section>
+            <h2>Why?</h2>
+          </section>
+          <section>
+            It's just for fun, and have a look at the different places.
+          </section>
+        </section>
+
+        <section data-transition="convex">
+          <section>
+            <h2>About the experience?</h2>
+          </section>
+          <section>
+            I walk down into the big hole of the mountain, the weather is so
+            different from the outside, it's really cold that I have to wear my
+            thick cloth.
+          </section>
+        </section>
+
+        <section data-transition="convex">
+          <section>
+            <h2>Connected?</h2>
+          </section>
+          <section data-auto-animate data-transition="convex">
+            <ul>
+              <li type="circle" data-id="box">Rock</li>
+            </ul>
+          </section>
+          <section data-auto-animate data-transition="convex">
+            <ul>
+              <li type="circle" data-id="box">Rock</li>
+              <li type="circle" data-id="box" style="font-size: 5vh">
+                Stream
+              </li>
+            </ul>
+          </section>
+          <section data-auto-animate data-transition="convex">
+            <ul>
+              <li type="circle" data-id="box">Rock</li>
+              <li type="circle" data-id="box">Stream</li>
+              <li type="circle" data-id="box">Tree</li>
+            </ul>
+          </section>
+        </section>
+
+        <section data-background="black">
+          <h1>Thank you!</h1>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script src="./custom/index.js"></script>
+    <script src="plugin/math/math.js"></script>
+    <script src="./plugin/zoom/zoom.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.configure({
+        keyboard: {
+          13: "next", // go to the next slide when the ENTER key is pressed
+          87: "up",
+          68: "next",
+          65: "left",
+          83: "down"
+          // 32: null, // don't do anything when SPACE is pressed (i.e. disable a reveal.js default binding)
+        }
+      })
+      Reveal.initialize({
+        hash: true,
+        katex: {
+          version: "latest",
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\(", right: "\\)", display: false },
+            { left: "\\[", right: "\\]", display: true }
+          ],
+          ignoredTags: ["script", "noscript", "style", "textarea", "pre"]
+        },
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [
+          RevealZoom,
+          RevealMath.KaTeX,
+          RevealMarkdown,
+          RevealHighlight,
+          RevealNotes
+        ]
+      })
+    </script>
+    <script src="./custom/module/init.js"></script>
+    <!-- <script type="module">
+      import app from "./custom/module/index.js";
+      app();
+    </script> -->
+  </body>
+</html>

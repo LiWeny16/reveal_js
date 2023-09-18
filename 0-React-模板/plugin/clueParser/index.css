@@ -169,6 +169,11 @@ code {
   list-style: none !important;
 }
 
+::-webkit-scrollbar{
+  width: 0px;
+}
+
+
 .HOV-BIG:hover {
   transform: scale(1.2);
   transition: transform 0.5s ease;

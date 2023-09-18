@@ -100,15 +100,7 @@ const App = () => {
   ]
   return (
     <>
-      <Space
-        style={{
-          marginBottom: 16
-        }}
-      >
-        {/* <Button onClick={setAgeSort}>Sort age</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button> */}
-      </Space>
+    
       <Table columns={columns} dataSource={data} onChange={handleChange} />
     </>
   )

@@ -34,19 +34,23 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
+    "@arco-design/web-react": "^2.53.0",
     "antd": "^5.6.1",
     "bigonion-kit": "^0.11.2",
     "bizcharts": "^4.1.22",
     "clue-parser": "^1.0.2",
     "d3": "^7.8.5",
+    "jol-player": "^4.0.0",
     "katex": "^0.16.8",
     "marked": "^5.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-photo-view": "^1.2.3",
     "react-reveal": "^1.2.2",
-    "recharts": "^2.7.1",
     "reveal": "^0.0.4",
     "reveal.js": "^4.5.0",
-    "string-replace-async": "^3.0.2"
+    "shadow-view": "^4.0.1",
+    "string-replace-async": "^3.0.2",
+    "video-react": "^0.16.0"
   }
 }
