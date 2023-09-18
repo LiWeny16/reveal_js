@@ -2,16 +2,16 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 import App from "./App.jsx"
 import Reveal from "reveal.js"
-import notes from "../plugin/notes/notes.esm.js"
+// import notes from "../plugin/notes/notes.esm.js"
 import zoom from "../plugin/zoom/zoom.esm.js"
 import hilight from "../plugin/highlight/highlight.esm.js"
 import kit from "bigonion-kit/index.mjs"
-import "./css/index.css"
+import "./css/index.less"
 import "@Plugin/clueParser/index.css"
-import "../dist/reset.css"
+// import "../dist/reset.css"
 import "../dist/reveal.css"
 import "../dist/theme/white.css"
-import "../plugin/katex/katex.css"
+// import "../plugin/katex/katex.css"
 
 let rootElement = document.getElementById("root")
 const root = ReactDOM.createRoot(rootElement)
@@ -58,7 +58,7 @@ kit
         //   // ignoredTags: ["script", "noscript", "style", "textarea", "pre"],
         // },
         // Learn about plugins: https://Revealjs.com/plugins/
-        plugins: [zoom, hilight, notes]
+        plugins: [zoom, hilight]
       })
     })
   })

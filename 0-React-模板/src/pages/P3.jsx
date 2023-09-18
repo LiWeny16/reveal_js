@@ -1,19 +1,27 @@
 import React from "react"
 import Steps from "../Components/Main/Steps"
 import Md from "../Components/Main/Md"
-import List1 from "../Components/List/List1"
-import List2 from "../Components/List/List2"
+// import List1 from "../Components/List/List1"
+// import List2 from "../Components/List/List2"
 import ListAdd from "../Components/List/ListAdd"
 import Section from "../Components/Main/Section"
 import ShadowMd from "../Components/Main/Shadow/ShadowRootMD"
 import Pie from "../Components/DigitalShow/Pie"
-import Pic2 from "../Components/Main/Img/Pic2"
-import Pic from "../Components/Main/Img/Pic"
+// import Pic2 from "../Components/Main/Img/Pic2"
+// import Pic from "../Components/Main/Img/Pic"
 import Code from "../Components/Main/Code/Code"
 import Table from "../Components/DigitalShow/Table"
 import MagicImg from "@Main/Img/MagicImg"
+import p1_1 from "@Assets/img/1-1.png"
+import p3_1 from "@Assets/img/3-1.jpg"
+import p3_2 from "@Assets/img/3-2.jpg"
+import p3_3 from "@Assets/img/3-3.jpg"
+import p3_4 from "@Assets/img/3-4.jpg"
+import p5_1 from "@Assets/img/5-1.jpg"
+import p5_2 from "@Assets/img/5-2.jpg"
+import p5_3 from "@Assets/img/5-3.jpg"
 import BarChart from "../Components/DigitalShow/BarChart"
-import VideoPlayer from "../Components/Main/Video"
+// import VideoPlayer from "../Components/Main/Video"
 import Directory from "../Components/Main/Directory"
 import {
   LoadingOutlined,
@@ -24,18 +32,20 @@ import {
 export default function App() {
   return (
     <>
+    {/* Start */}
       <Section back="black" trans="slide">
         <div className="P2">Force Feedback Gloves</div>
         <hr />
         <div className="P3">Virtual into vital</div>
       </Section>
+      {/* Dire */}
       <Section back="#FFDDEE">
         <Directory></Directory>
       </Section>
       {/* 1. */}
       <Section>
         <Section>
-            <h1>Background</h1>
+          <h1>Background</h1>
         </Section>
         <ListAdd trans="convex" className="" back="white">
           <ul>
@@ -87,20 +97,21 @@ export default function App() {
         </ListAdd>
         <Section trans="zoom">
           <MagicImg
-            width="100%"
+            width="80%"
             data={[
               "Relate couples",
-              "assets/img/3-1.jpg",
+              p3_1,
               "Feel families",
-              "assets/img/3-2.jpg"
+              p3_2
             ]}
           />
         </Section>
+
         <ListAdd>
           <ul>
             <li>
               People who are allergic to animal hair can use this gloves to
-              experience the feel of touching their pet.{" "}
+              experience the feel of touching their pet.
             </li>
           </ul>
           <ul>
@@ -114,9 +125,9 @@ export default function App() {
             width="100%"
             data={[
               "Touch pets",
-              "assets/img/3-3.jpg",
+              p3_3,
               "Touch endangered animals",
-              "assets/img/3-4.jpg"
+              p3_4
             ]}
           />
         </Section>
@@ -128,130 +139,25 @@ export default function App() {
           <Md>## 5. About future</Md>
         </Section>
         <Section trans="convex">
-          <MagicImg width="100%" data={["", "assets/img/5-3.jpg"]} />
+          <MagicImg width="100%" data={["",p5_3]} />
         </Section>
         <Section>
           <MagicImg
             width="100%"
             data={[
               "Ready Player one",
-              "assets/img/5-1.jpg",
+              p5_1,
               "For wearing equipment",
-              "assets/img/5-2.jpg"
+              p5_2
             ]}
           />
         </Section>
       </Section>
 
-      <Section>
-        <Code
-          className="NOSCROLL"
-          word="word"
-          line="1-5|6-10|10-23"
-          code="
-        // 我是代码
-        // 创建模型  
-        const model = tf.sequential();  
-        model.add(tf.layers.dense({units: 1, inputShape: [1]}));  
-          
-        // 编译模型  
-        model.compile({loss: 'meanSquaredError', optimizer: 'sgd'});  
-          
-        // 准备训练数据  
-        const xs = tf.tensor2d([[0], [1], [2], [3], [4], [5]], [6, 1]);  
-        const ys = tf.tensor2d([[1], [3], [5], [7], [9], [11]], [6, 1]);  
-          
-        // 训练模型  
-        model.fit(xs, ys, {epochs: 100}).then(() => {  
-          // 使用模型进行预测  
-          const prediction = model.predict(tf.tensor2d([6], [1, 1]));  
-            
-          // 打印预测结果  
-          prediction.data().then((result) => {  
-            console.log(result); // 输出 12.002  
-          });  
-        });  
-   "
-        />
-      </Section>
-      <Section trans="zoom">
-        <BarChart
-          data={[
-            { year: "1951 年", sales: 0 },
-            { year: "1952 年", sales: 52 },
-            { year: "1956 年", sales: 61 },
-            { year: "1957 年", sales: 45 },
-            { year: "1958 年", sales: 48 },
-            { year: "1959 年", sales: 38 },
-            { year: "1960 年", sales: 38 },
-            { year: "1962 年", sales: 38 }
-          ]}
-        />
-      </Section>
-      {/**@des 表格展示*/}
-      <Section>
-        <Table></Table>
-      </Section>
-
-      <Section trans="zoom" back="#FFDDEE">
-        <Steps
-          data={[
-            {
-              title: "Login",
-              status: "finish",
-              icon: <UserOutlined />
-            },
-            {
-              title: "Verification",
-              status: "finish",
-              icon: <SolutionOutlined />
-            },
-            {
-              title: "Pay",
-              status: "process",
-              icon: <LoadingOutlined />
-            },
-            {
-              title: "Done",
-              status: "wait",
-              icon: <SmileOutlined />
-            }
-          ]}
-        ></Steps>
-      </Section>
-
-      <Section>
-        <Section>
-          <MagicImg
-            data={["PIC1", "http://bigonion.cn/background/wallheaven.jfif"]}
-          />
-        </Section>
-        <Section>
-          <MagicImg
-            width="80%"
-            data={[
-              "PIC1",
-              "http://bigonion.cn/background/wallheaven.jfif",
-              "PIC2",
-              "http://bigonion.cn/background/wallheaven.jfif"
-            ]}
-          />
-        </Section>
-      </Section>
-
-      {/* <Section>
-        <List2 t1="首先" t2="然后" t3="最后" t4="结束" size="1" sizeBig="4" />
-      </Section> */}
       <Section>
         <Pie />
       </Section>
-      <Section trans="convex-out">
-        <ShadowMd
-          className="FLEX JUS-CEN"
-          style="*{font-size:4vh;}"
-          md={`SHADOW MARKDOWN`}
-        ></ShadowMd>
-      </Section>
+
       {/* <Section LISTADD>
         <ListAdd className="NOLIST" back="black">
           <ul>

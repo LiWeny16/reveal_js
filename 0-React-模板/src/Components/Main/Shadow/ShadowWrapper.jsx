@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import { clueParerAll, latexParse2 } from "@Plugin/clueParser/clue.js"
-import katexCss from "@Plugin/katex/katex.css?raw"
+// import katexCss from "@Plugin/katex/katex.css?raw"
 import clueCss from "@Plugin/clueParser/index.css?raw"
 import ReactDOMServer from "react-dom/server"
 
