@@ -154,7 +154,15 @@ $$
         <List2 t1="首先" t2="然后" t3="最后" t4="结束" size="1" sizeBig="4" />
       </Section> */}
       <Section>
-        <Pie />
+        <Pie
+          data={[
+            { item: "1", count: 40, percent: 0.4 },
+            { item: "2", count: 21, percent: 0.21 },
+            { item: "3", count: 17, percent: 0.17 },
+            { item: "4", count: 13, percent: 0.13 },
+            { item: "5", count: 9, percent: 0.09 }
+          ]}
+        />
       </Section>
       <Section trans="convex-out">
         <ShadowMd

@@ -10,7 +10,7 @@ export default function MagicImg(props) {
       <>
         <div className={_className}>
           <div className="FLEX COL">
-            <div className="P3">
+            <div className="P4">
               <p>{props.data[0] ?? ""}</p>
             </div>
             <div>
@@ -32,7 +32,7 @@ export default function MagicImg(props) {
           </div>
           {props.data[2] && props.data[3] ? (
             <div className="FLEX COL">
-              <div className="P3">
+              <div className="P4">
                 <p>{props.data[2] ?? ""}</p>
               </div>
               <div>

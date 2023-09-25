@@ -11,6 +11,7 @@ import "@Plugin/clueParser/index.css"
 // import "../dist/reset.css"
 import "../dist/reveal.css"
 import "../dist/theme/white.css"
+// 轮播图css
 // import "../plugin/katex/katex.css"
 
 let rootElement = document.getElementById("root")

@@ -4,6 +4,7 @@ import { useEffect } from "react"
 export default function Section(props: any) {
   const transition = props.trans
   const background = props.back
+  const backUrl = background?.match(/\//g) ? background : ""
   const autoAni = props.autoAni
   const autoAniId = props.autoAniId
   const className = props.className
@@ -14,7 +15,7 @@ export default function Section(props: any) {
    * @description 注册属性名和数值
    * @param data string
    * @param name string
-  */
+   */
   function assignProsForSection(data: any, name: string) {
     if (data) {
       let additionObj = {}
@@ -29,7 +30,7 @@ export default function Section(props: any) {
     assignProsForSection(background, "data-background-color")
     assignProsForSection(autoAni, "data-auto-animate")
     assignProsForSection(autoAniId, "data-auto-animate-id")
-
+    assignProsForSection(backUrl, "data-background-image")
     // !transition
     //   ? 1
     //   : setFinalPropsForSection((pre) => {

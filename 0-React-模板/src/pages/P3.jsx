@@ -268,7 +268,7 @@ export default function App() {
         <Section>
           <MagicImg
             width="100%"
-            data={["Ready Player one", p5_1, "For wearing equipment", p5_2]}
+            data={["Ready Player one", p5_1, "Full Wearing Equipment", p5_2]}
           />
         </Section>
       </Section>
