@@ -31,7 +31,7 @@ code {
 .P4 {
   font-size: 4vh;
 }
-.P4_5{
+.P4_5 {
   font-size: 3vh;
 }
 .P5 {
@@ -221,4 +221,8 @@ code {
   /* border: solid black !important; */
   transition: 0.5 ease;
   width: 100%;
+}
+
+.WRAP  {
+  word-wrap: break-word;
 }

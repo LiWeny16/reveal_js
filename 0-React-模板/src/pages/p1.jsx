@@ -57,7 +57,7 @@ $$
       <Section>
         <Code
           className="NOSCROLL"
-          word="word"
+          word="Simple Code"
           line="1-5|6-10|10-23"
           code="
         // 我是代码

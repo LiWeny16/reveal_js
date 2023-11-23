@@ -8,8 +8,12 @@ import { viteSingleFile } from "vite-plugin-singlefile"
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), viteSingleFile()],
+
   build: {
-    outDir: "build/P4"
+    rollupOptions: {
+      output: { manualChunks: undefined }
+    },
+    outDir: "build/入党"
   },
   base: "./",
   server: {
@@ -21,6 +25,8 @@ export default defineConfig({
     alias: {
       "@Plugin": resolve(__dirname, "./plugin"),
       "@Assets": resolve(__dirname, "./assets"),
+      "@Com":resolve(__dirname,"src/Components"),
+      "@Com/*":resolve(__dirname,"src/Components/*"),
       "@Main": resolve(__dirname, "src/Components/Main"),
       "@Main/*": resolve(__dirname, "src/Components/Main/*")
     }

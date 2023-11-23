@@ -1,3 +1,6 @@
+/**
+ * @description Pre 2 final English
+*/
 import React from "react"
 import Steps from "../Components/Main/Steps"
 import Md from "../Components/Main/Md"
@@ -21,12 +24,14 @@ import Pie2 from "../Components/DigitalShow/Pie2"
 import LineChart from "../Components/DigitalShow/LineChart"
 import Directory2 from "../Components/Main/Directory2"
 // console.log(p1_1);
-import {
-  LoadingOutlined,
-  SmileOutlined,
-  SolutionOutlined,
-  UserOutlined
-} from "@ant-design/icons"
+// import {
+//   LoadingOutlined,
+//   SmileOutlined,
+//   SolutionOutlined,
+//   UserOutlined
+// } from "@ant-design/icons"
+
+import v1 from "@Assets/video/1.mp4"
 
 import p1_1 from "@Assets/img/1-1.jpg"
 import p1_2 from "@Assets/img/1-2.jfif"
@@ -85,12 +90,42 @@ import p5_9 from "@Assets/img/5-9.jpg"
 export default function App() {
   return (
     <>
-      <Section back="white" trans="slide">
-        <div className="P3_5">
-          A SURVEY REPORT ON COLLEAGE STUDENTS STAYING UP LATE
+      <Section trans="slide">
+        {/* <div className="P3_5">
+          A SURVEY REPORT ON COLLEAGE
+          <br /> STUDENTS STAYING UP LATE
         </div>
         <hr />
-        <div className="P4">bigonion</div>
+        <div className="P4">bigonion</div> */}
+        <section data-auto-animate>
+          <div data-id="box" className="P3_5">
+            A SURVEY REPORT ON COLLEAGE
+            <br /> STUDENTS STAYING UP LATE
+          </div>
+          <div
+            data-id="box"
+            style={{ width: "", height: "20px", background: "blue" }}
+          >
+            {" "}
+          </div>
+        </section>
+        <section data-auto-animate>
+          <div data-id="box" className="P3_5 RED">
+            A SURVEY REPORT ON COLLEAGE
+            <br /> STUDENTS STAYING UP LATE
+          </div>
+          <div
+            data-id="box"
+            style={{
+              marginTop: "50px",
+              width: "",
+              height: "70px",
+              background: "pink"
+            }}
+          >
+            {" "}
+          </div>
+        </section>
       </Section>
 
       {/* Dire */}
@@ -101,10 +136,13 @@ export default function App() {
 
       {/* 1. Background */}
       <Section>
-        <Section>
+        <Section back="linear-gradient(to right, rgb(172, 182, 229), rgb(134, 253, 232))">
           <h3>1. Introduction</h3>
         </Section>
-        <Section>
+        <Section
+          className="WHITE"
+          back="linear-gradient(to right, rgb(26, 41, 128), rgb(38, 208, 206))"
+        >
           <h4>1.1 Background</h4>
         </Section>
         <Section>
@@ -124,7 +162,7 @@ export default function App() {
         <Section>
           <MagicImg
             width={["45vh"]}
-            data={["The China Sleep Research Report 2023", p1_5]}
+            data={["The health report of Chinese colleage students", p1_5]}
           ></MagicImg>
           <ul style={{ float: "left" }}>
             <li className="LEFT P4">
@@ -146,8 +184,25 @@ export default function App() {
         <Section>
           <h3>2. Methodology</h3>
         </Section>
+
         <Section>
-          <h4>2.1 Method</h4>
+          <h4>2.1 The design</h4>
+        </Section>
+        <Section>
+          <MagicImg width={["115vh"]} data={[" ", p2_2_12]}></MagicImg>
+        </Section>
+        <Section>
+          <MagicImg width={["115vh"]} data={[" ", p2_2_13]}></MagicImg>
+        </Section>
+        <Section>
+          <MagicImg width={["115vh"]} data={[" ", p2_2_14]}></MagicImg>
+        </Section>
+        <Section>
+          <MagicImg width={["115vh"]} data={[" ", p2_2_15]}></MagicImg>
+        </Section>
+        {/* 3.2 */}
+        <Section>
+          <h4>2.2 Method</h4>
         </Section>
         <Section>
           <MagicImg width={["85vh"]} data={[" ", p2_1]}></MagicImg>
@@ -168,21 +223,6 @@ export default function App() {
             </li>
           </ul>
         </ListAdd>
-        <Section>
-          <h4>2.2 The design</h4>
-        </Section>
-        <Section>
-          <MagicImg width={["115vh"]} data={[" ", p2_2_12]}></MagicImg>
-        </Section>
-        <Section>
-          <MagicImg width={["115vh"]} data={[" ", p2_2_13]}></MagicImg>
-        </Section>
-        <Section>
-          <MagicImg width={["115vh"]} data={[" ", p2_2_14]}></MagicImg>
-        </Section>
-        <Section>
-          <MagicImg width={["115vh"]} data={[" ", p2_2_15]}></MagicImg>
-        </Section>
       </Section>
 
       {/* 3. Interview */}
@@ -191,7 +231,7 @@ export default function App() {
           <h3>3. Interview</h3>
         </Section>
         <Section>
-          <VideoPlayer src="https://bigonion.cn/src/myMusic/%E9%82%A3%E5%B9%B4%E6%B2%B3%E7%95%94.mp4"></VideoPlayer>
+          <VideoPlayer src={v1}></VideoPlayer>
         </Section>
       </Section>
 
@@ -577,6 +617,21 @@ export default function App() {
       {/* <Section>
         <Pie2></Pie2>
       </Section> */}
+      <Section>
+        <ListAdd className="NOLIST MARGIN-LEFT LEFT" back="black">
+          <h2 data-id="box">OUR Team List</h2>
+          <hr data-id="box" />
+          <li data-id="box" className="P4 NOLIST">
+            Li Wenyu, Chen Xiao, Shi Jiaqi, Xue Yufeng
+          </li>
+          <li data-id="box" className="P4 NOLIST">
+            {/* <span className="YELLOW">图片及其他资料: </span> */}
+            <br />
+            Shan Wenkai, Ding Dang, Zhang Yiyi, Zhao Zifang
+          </li>
+          <hr data-id="box" />
+        </ListAdd>
+      </Section>
       <Section>
         <h3>THANKS!</h3>
       </Section>

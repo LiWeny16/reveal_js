@@ -11,6 +11,7 @@ import "@Plugin/clueParser/index.css"
 // import "../dist/reset.css"
 import "../dist/reveal.css"
 import "../dist/theme/white.css"
+import "@arco-design/web-react/dist/css/arco.css"
 // 轮播图css
 // import "../plugin/katex/katex.css"
 
@@ -30,8 +31,12 @@ kit
   })
   .then(() => {
     kit.sleep(50).then(() => {
+      Reveal.on("slidechanged", (event) => {
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+        // console.log(event);
+      })
       Reveal.configure({
-        center:true,
+        center: true,
         // controlsTutorial: false,
         // controlsBackArrows: 'hidden',
         // progress: false,
@@ -40,14 +45,15 @@ kit
           87: "up",
           68: "next",
           65: "left",
-          83: "down"
+          83: "down",
+          9:"null"
           // 32: null, // don't do anything when SPACE is pressed (i.e. disable a Reveal.js default binding)
         }
       })
       Reveal.initialize({
         hash: true,
         dependencies: [],
-        slideNumber:false,
+        slideNumber: false,
         // katex: {
         //   version: "latest",
         //   delimiters: [
