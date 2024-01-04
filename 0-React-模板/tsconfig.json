@@ -19,6 +19,8 @@
     "jsx": "react-jsx",
     "useDefineForClassFields": true,
     "paths": {
+      "@Plugin":["./plugin"],
+      "@Plugin/*":["./plugin/*"],
       "@Assets": ["./assets"],
       "@Assets/*": ["./assets/*"],
       "@Com": ["./src/Components"],

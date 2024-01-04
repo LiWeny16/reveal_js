@@ -12,3 +12,29 @@
 .bigBox{
   display: flex;
 }
+tr:hover {
+  background-color: rgba(223, 223, 223, 0.176) !important;
+}
+
+/* 隐藏浏览器默认样式的滚动条 */
+::-webkit-scrollbar {
+  display: block !important;
+}
+::-moz-scrollbar {
+  display: block !important;
+}
+/* 自定义滚动条的样式 */
+::-webkit-scrollbar {
+  width: 1vw !important; /* 设置滚动条的宽度 */
+  height: 8px !important;
+}
+::-webkit-scrollbar-track {
+  background: #a4a4a4; /* 设置滚动条轨道的颜色 */
+}
+::-webkit-scrollbar-thumb {
+  background: #6294ff; /* 设置滚动条手柄的颜色 */
+  border-radius: 6px; /* 设置滚动条手柄的圆角 */
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2067ff; /* 设置鼠标悬停时滚动条手柄的颜色 */
+}

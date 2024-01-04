@@ -19,6 +19,7 @@ import autorun from "@Assets/img/FYP/2/autorun.jpg"
 import maixbit from "@Assets/img/FYP/2/maixbit.png"
 import airecog from "@Assets/img/FYP/2/airecog.jfif"
 import iot from "@Assets/img/FYP/2/iot.jfif"
+import aicar from "@Assets/img/FYP/3/aicar.png"
 
 import Code from "@Com/Main/Code/Code"
 import VideoPlayer from "@Com/Main/Video"

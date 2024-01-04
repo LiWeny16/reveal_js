@@ -25,7 +25,6 @@ export default function MagicImg(props: ImgOptions) {
   let layout = propsMerge.settings!.layout!
   // console.log(propsMerge)
   let _img_style: React.CSSProperties = {
-    width: img0.width,
     userSelect: "none",
   }
 
@@ -47,7 +46,7 @@ export default function MagicImg(props: ImgOptions) {
                     <PhotoView src={img0.src}>
                       <img
                         className="NOMARGIN HOV-BIG"
-                        style={_img_style}
+                        style={{..._img_style,width:img0.width}}
                         src={img0.src}
                         alt="网络不佳"
                       />
@@ -56,7 +55,7 @@ export default function MagicImg(props: ImgOptions) {
                 ) : (
                   <img
                     className="NOMARGIN"
-                    style={_img_style}
+                    style={{..._img_style,width:img0.width}}
                     src={img0.src}
                     alt="网络不佳"
                   />
@@ -74,7 +73,7 @@ export default function MagicImg(props: ImgOptions) {
                       <PhotoView src={img1.src}>
                         <img
                           className="NOMARGIN HOV-BIG"
-                          style={_img_style}
+                          style={{..._img_style,width:img1.width}}
                           src={img1.src}
                           alt="网络不佳"
                         />
@@ -83,7 +82,7 @@ export default function MagicImg(props: ImgOptions) {
                   ) : (
                     <img
                       className="NOMARGIN"
-                      style={_img_style}
+                      style={{..._img_style,width:img1.width}}
                       src={img1.src}
                       alt="网络不佳"
                     />

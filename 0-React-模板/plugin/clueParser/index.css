@@ -155,6 +155,9 @@ code {
 .MARGIN-RIGHT {
   margin-right: 3vw;
 }
+.MARGIN-VER > * {
+  margin-top: 30px;
+}
 
 .fullPreCode {
   height: 80% !important;
@@ -223,6 +226,6 @@ code {
   width: 100%;
 }
 
-.WRAP  {
+.WRAP {
   word-wrap: break-word;
 }

@@ -12,13 +12,10 @@ interface ImgOptions extends NormalComponentsOptions {
 interface ImgSettings {
   layout?: Layout4
   magic?: boolean
-  draggable?:boolean
+  draggable?: boolean
 }
 
-interface ScrollDirOptions extends NormalComponentsOptions{
-  
-}
-
+interface ScrollDirOptions extends NormalComponentsOptions {}
 
 interface ImgData {
   src: string
@@ -68,12 +65,27 @@ interface Movement {
  * @description Section的选项
  */
 interface SectionOptions extends NormalComponentsOptions {
-  trans?: any
+  trans?: TransType | string
   back?: any
   autoAni?: any
   autoAniId?: any
   html?: any
 }
+type TransType =
+  | "none"
+  | "fade"
+  | "slide"
+  | "convex"
+  | "concave"
+  | "zoom"
+  // | "fade-in"
+  // | "fade-out"
+  // | "zoom-in"
+  // | "zoom-out"
+  // | "convex-in"
+  // | "convex-out"
+  // | "slide-in"
+  // | "slide-out"
 
 type Enumerate<
   N extends number,

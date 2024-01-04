@@ -13,7 +13,7 @@ export default defineConfig({
     rollupOptions: {
       output: { manualChunks: undefined }
     },
-    outDir: "build/入党"
+    outDir: "build/FYP/mid-tern"
   },
   base: "./",
   server: {

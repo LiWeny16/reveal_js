@@ -1,6 +1,7 @@
 // import "index.css"
 import { marked } from "https://npm.elemecdn.com/marked/lib/marked.esm.js"
-import mermaid from "https://npm.elemecdn.com/mermaid@10/dist/mermaid.esm.min.mjs"
+// import mermaid from "https://npm.elemecdn.com/mermaid@10/dist/mermaid.esm.min.mjs"
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs"
 import hljs from "https://npm.elemecdn.com/@highlightjs/cdn-assets@11.6.0/es/highlight.min.js"
 import katex from "katex"
 import replaceAsync from "string-replace-async"

@@ -13,6 +13,7 @@ export default function ListAdd(props:any) {
           data-background-image={props.backUrl ?? ""}
           className={props.className}
           key={key}
+          style={props.style}
         >
           {content}
         </section>
@@ -28,23 +29,6 @@ export default function ListAdd(props:any) {
       {props.children.map((_: any, index: number) =>
         basicSection(props.children.slice(0, index + 1), props, random, index)
       )}
-      {/* <section
-        data-background={props.back ?? "white"}
-        data-auto-animate
-        data-auto-animate-id={random}
-      >
-        {props.children[0]}
-        {props.children[1]}
-      </section>
-      <section
-        data-background={props.back ?? "white"}
-        data-auto-animate
-        data-auto-animate-id={random}
-      >
-        {props.children[0]}
-        {props.children[1]}
-        {props.children[2]}
-      </section> */}
     </>
   )
 }
